@@ -24,7 +24,7 @@ const App = () => {
       {data.map((contact) => {
         // return ( # 이게 있으면 에러남!!
         <li key={contact.id}>
-          {contact.name} - {contact.email}
+          {contact.name} {contact.email}
         </li>;
         // );
       })}
