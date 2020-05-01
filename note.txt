@@ -1,0 +1,3 @@
+this is based on https://www.valentinog.com/blog/drf/
+but has webpack problems like https://jsdev.kr/t/topic/4669/4
+and tree structure is horrible...
