@@ -16,6 +16,9 @@ const App = () => {
       })
       .then((data) => {
         return setData(data), setLoaded(true);
+        // setData(data);
+        // setLoaded(true);
+        // console.log(data);
       });
   }, []);
 
