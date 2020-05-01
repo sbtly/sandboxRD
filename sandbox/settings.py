@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'euv.apps.EuvConfig',
+    'rest_framework',
+    'frontend',  # enable the frontend app
 ]
 
 MIDDLEWARE = [
