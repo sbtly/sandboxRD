@@ -6,23 +6,24 @@ const userAPI = new UserAPI();
 const UserCreateUpdate = (props) => {
   const firstName = useRef(null);
   const lastName = useRef(null);
-  const email = useRef(null);
-  const phone = useRef(null);
-  const address = useRef(null);
-  const description = useRef(null);
+  //   const email = useRef(null);
+  //   const phone = useRef(null);
+  //   const address = useRef(null);
+  //   const description = useRef(null);
 
   useEffect(() => {
+    console.log(firstName.current.value);
     const {
       match: { params },
     } = props;
 
     if (params && params.pk) {
       userAPI.getUser(params.pk).then((u) => {
-        firstName.value = u.first_name;
-        lastName.value = u.last_name;
-        email.value = u.email;
-        phone.value = u.phone;
-        description.value = u.description;
+        firstName.current.value = u.first_name;
+        lastName.current.value = u.last_name;
+        // email.value = u.email;
+        // phone.value = u.phone;
+        // description.value = u.description;
       });
     }
   }, [props]);
@@ -30,12 +31,12 @@ const UserCreateUpdate = (props) => {
   const handleCreate = useCallback(() => {
     userAPI
       .createUser({
-        first_name: firstName.value,
-        last_name: lastName.value,
-        email: email.value,
-        phone: phone.value,
-        address: address.value,
-        description: description.value,
+        first_name: firstName.current.value,
+        last_name: lastName.current.value,
+        // email: email.value,
+        // phone: phone.value,
+        // address: address.value,
+        // description: description.value,
       })
       .then((result) => {
         alert("User created!");
@@ -49,12 +50,12 @@ const UserCreateUpdate = (props) => {
     userAPI
       .updateUser({
         pk: pk,
-        first_name: firstName.value,
-        last_name: lastName.value,
-        email: email.value,
-        phone: phone.value,
-        address: address.value,
-        description: description.value,
+        first_name: firstName.current.value,
+        last_name: lastName.current.value,
+        // email: email.value,
+        // phone: phone.value,
+        // address: address.value,
+        // description: description.value,
       })
       .then((result) => {
         console.log(result);
@@ -91,7 +92,7 @@ const UserCreateUpdate = (props) => {
         <label>Last Name:</label>
         <input className="form-control" type="text" ref={lastName} />
 
-        <label>Phone:</label>
+        {/* <label>Phone:</label>
         <input className="form-control" type="text" ref={phone} />
 
         <label>Email:</label>
@@ -101,7 +102,7 @@ const UserCreateUpdate = (props) => {
         <input className="form-control" type="text" ref={address} />
 
         <label>Description:</label>
-        <textarea className="form-control" ref={description}></textarea>
+        <textarea className="form-control" ref={description}></textarea> */}
 
         <input className="btn btn-primary" type="submit" value="Submit" />
       </div>

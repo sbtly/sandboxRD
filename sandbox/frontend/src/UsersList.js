@@ -54,10 +54,10 @@ const UsersList = () => {
               <td>{u.pk}</td>
               <td>{u.first_name}</td>
               <td>{u.last_name}</td>
-              <td>{u.phone}</td>
+              {/* <td>{u.phone}</td>
               <td>{u.email}</td>
               <td>{u.address}</td>
-              <td>{u.description}</td>
+              <td>{u.description}</td> */}
               <td>
                 <button onClick={(e) => handleDelete(e, u.pk)}>Delete</button>
                 <a href={"/user/" + u.pk}>Update</a>
