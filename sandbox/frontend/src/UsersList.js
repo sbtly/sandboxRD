@@ -70,7 +70,6 @@ const UsersList = () => {
       setUsers(result.data);
       setNextPageURL(result.nextlink);
     });
-    console.log(data);
   }, []);
 
   return (
@@ -105,12 +104,10 @@ const UsersList = () => {
 
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map((headerGroup, i) => (
-            <tr key={i} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, i) => (
-                <th key={i} {...column.getHeaderProps()}>
-                  {column.render("Header")}
-                </th>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
               ))}
             </tr>
           ))}
@@ -119,14 +116,18 @@ const UsersList = () => {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr key={i} {...row.getRowProps()}>
-                {row.cells.map((cell, i) => {
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
                   return (
-                    <td key={i} {...cell.getCellProps()}>
-                      {cell.render("Cell")}
-                    </td>
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   );
                 })}
+                <td>
+                  <button onClick={(e) => handleDelete(e, data[i].pk)}>
+                    Delete
+                  </button>
+                  <a href={"/user/" + data[i].pk}>Update</a>
+                </td>
               </tr>
             );
           })}
