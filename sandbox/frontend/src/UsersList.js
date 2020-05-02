@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import UserAPI from "./UserAPI";
+import { useTable } from "react-table";
 
 const userAPI = new UserAPI();
 
@@ -26,6 +27,44 @@ const UsersList = () => {
     [users]
   );
 
+  const data = useMemo(
+    () =>
+      users.map((u) => ({
+        pk: u.pk,
+        first_name: u.first_name,
+        last_name: u.last_name,
+      })),
+    [users]
+  );
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "no.",
+        accessor: "pk",
+      },
+      {
+        Header: "First Name",
+        accessor: "first_name",
+      },
+      {
+        Header: "Last Name",
+        accessor: "last_name",
+      },
+    ],
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({ columns, data });
+
+  //   console.log(data);
+
   useEffect(() => {
     userAPI.getUsers().then(function (result) {
       setUsers(result.data);
@@ -35,7 +74,7 @@ const UsersList = () => {
 
   return (
     <div className="usersList">
-      <table className="table">
+      {/* <table className="table">
         <thead key="thead">
           <tr>
             <th>#</th>
@@ -54,10 +93,6 @@ const UsersList = () => {
               <td>{u.pk}</td>
               <td>{u.first_name}</td>
               <td>{u.last_name}</td>
-              {/* <td>{u.phone}</td>
-              <td>{u.email}</td>
-              <td>{u.address}</td>
-              <td>{u.description}</td> */}
               <td>
                 <button onClick={(e) => handleDelete(e, u.pk)}>Delete</button>
                 <a href={"/user/" + u.pk}>Update</a>
@@ -65,7 +100,40 @@ const UsersList = () => {
             </tr>
           ))}
         </tbody>
+      </table> */}
+
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  );
+                })}
+                <td>
+                  <button onClick={(e) => handleDelete(e, data[i].pk)}>
+                    Delete
+                  </button>
+                  <a href={"/user/" + data[i].pk}>Update</a>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
+
       <button className="btn" onClick={nextPage}>
         Next
       </button>

@@ -33,11 +33,9 @@ import UserCreateUpdate from "./UserCreateUpdate";
 import "./App.css";
 
 const BaseLayout = () => (
-  <div className="container-fluid">
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      {/* <a className="navbar-brand" href="#">
-        Django React Demo
-      </a> */}
+  <div className="container">
+    {/* <div className= */}
+    {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <button
         className="navbar-toggler"
         type="button"
@@ -59,7 +57,7 @@ const BaseLayout = () => (
           </a>
         </div>
       </div>
-    </nav>
+    </nav> */}
     <div className="content">
       <Route path="/" exact component={UsersList} />
       <Route path="/user/:pk" component={UserCreateUpdate} />
