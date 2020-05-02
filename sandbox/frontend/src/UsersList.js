@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react;";
+import React, { useEffect, useState, useCallback } from "react";
 import UserAPI from "./UserAPI";
 
 const userAPI = new UserAPI();
