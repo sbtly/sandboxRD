@@ -6,7 +6,8 @@ from rest_framework import status
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import User
-from .serializers import *
+# from .serializers import *
+from .serializers import UserSerializer
 
 
 @api_view(['GET', 'POST'])
