@@ -3,7 +3,7 @@ import UserAPI from "./UserAPI";
 
 const userAPI = new UserAPI();
 
-const UsersList = (props) => {
+const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [nextPageURL, setNextPageURL] = useState("");
 
@@ -12,16 +12,19 @@ const UsersList = (props) => {
       setUsers(result.data);
       setNextPageURL(result.nextlink);
     });
-  }, []);
+  }, [nextPageURL]);
 
-  const handleDelete = useCallback((e, pk) => {
-    userAPI.deleteUser({ pk: pk }).then(() => {
-      var newArr = users.filter(function (obj) {
-        return obj.pk !== pk;
+  const handleDelete = useCallback(
+    (e, pk) => {
+      userAPI.deleteUser({ pk: pk }).then(() => {
+        var newArr = users.filter(function (obj) {
+          return obj.pk !== pk;
+        });
+        setUsers(newArr);
       });
-      setUsers(newArr);
-    });
-  }, []);
+    },
+    [users]
+  );
 
   useEffect(() => {
     userAPI.getUsers().then(function (result) {

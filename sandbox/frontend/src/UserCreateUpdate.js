@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 
 import UserAPI from "./UserAPI";
 const userAPI = new UserAPI();
@@ -25,7 +25,7 @@ const UserCreateUpdate = (props) => {
         description.value = u.description;
       });
     }
-  }, []);
+  }, [props]);
 
   const handleCreate = useCallback(() => {
     userAPI
@@ -65,19 +65,22 @@ const UserCreateUpdate = (props) => {
       });
   }, []);
 
-  const handleSubmit = useCallback((event) => {
-    const {
-      match: { params },
-    } = props;
+  const handleSubmit = useCallback(
+    (event) => {
+      const {
+        match: { params },
+      } = props;
 
-    if (params && params.pk) {
-      handleUpdate(params.pk);
-    } else {
-      handleCreate();
-    }
+      if (params && params.pk) {
+        handleUpdate(params.pk);
+      } else {
+        handleCreate();
+      }
 
-    event.preventDefault();
-  }, []);
+      event.preventDefault();
+    },
+    [handleCreate, handleUpdate, props]
+  );
 
   return (
     <form onSubmit={handleSubmit}>
