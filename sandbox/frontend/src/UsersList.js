@@ -31,14 +31,12 @@ const UsersList = () => {
   );
 
   // reactabular.. effect안에? layout안에?
-  const rows = [
-    users.map((u) => ({
-      //   id: i,
-      pk: u.pk,
-      first_name: u.first_name,
-      last_name: u.last_name,
-    })),
-  ];
+  const rows = users.map((u) => ({
+    //   id: i,
+    pk: u.pk,
+    first_name: u.first_name,
+    last_name: u.last_name,
+  }));
 
   const columns = [
     {
