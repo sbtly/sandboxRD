@@ -3,7 +3,7 @@ const API_URL = "http://localhost:8000";
 // create-react-app proxy로 대체..가 안돼서 결국 cors 씀
 
 export default class UserAPI {
-  constructor() {}
+  //   constructor() {}
 
   getUsers() {
     const url = `${API_URL}/api/users/`;

@@ -25,9 +25,9 @@
 
 // export default App;
 
-import React, { useEffect, useState, useCallback } from "react";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import UsersList from "./UsersList";
 import UserCreateUpdate from "./UserCreateUpdate";
 import "./App.css";
