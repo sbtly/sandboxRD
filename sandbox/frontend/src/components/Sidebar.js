@@ -28,18 +28,13 @@ const SidebarDivStyle = styled(animated.div)`
 const SidebarDimStyle = styled(animated.div)`
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: whitesmoke;
   opacity: 0.3;
   z-index: 100;
 `;
 
 const SidebarDiv = (props) => {
-  // const [expand, setExpand] = useState(false);
   const [animate, setAnimate] = useSpring(() => ({ left: vars.left }));
-
-  // const gesture = useHover(({ hovering }) =>
-  //   setAnimate({ left: hovering ? 0 : vars.left })
-  // );
 
   const gesture = useHover(({ hovering }) => {
     setAnimate({ left: hovering ? 0 : vars.left });
@@ -54,8 +49,7 @@ const SidebarDiv = (props) => {
 };
 
 const SidebarDim = (props) => {
-  console.log(props.hovered);
-
+  // console.log(props.hovered);
   const animate = useSpring({
     opacity: props.hovered ? 0.5 : 0,
   });
@@ -66,7 +60,6 @@ const SidebarDim = (props) => {
 const Sidebar = () => {
   const [hovered, setHovered] = useState();
   const receivedHovered = (value) => {
-    // console.log(value);
     setHovered(value);
   };
   return (
