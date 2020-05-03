@@ -18,4 +18,10 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
+
+  .content {
+      float: right;
+      width: calc(100% - 80px - (40px)*2);
+      padding: 40px;
+  }
 `;

@@ -11,9 +11,9 @@ const SidebarDiv = styled(animated.div)`
   position: fixed;
   border-radius: 0 16px 16px 0;
   left: vars.left;
-  /* width: ${(props) => (props.expand ? 200 : 80)}px; */
-  /* height: calc(100vh - 20px); */
   width: 200px;
+  /* top: 10px;
+  height: calc(100vh - 20px); */
   height: 100%;
   background: #fff;
 `;
