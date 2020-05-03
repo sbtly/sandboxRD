@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     background: #fbfbfb;
   }
 
-  #root {
+  #root, .container {
     width: 100%;
     height: 100%;
   }
@@ -22,6 +22,7 @@ export const GlobalStyle = createGlobalStyle`
   .content {
       float: right;
       width: calc(100% - 80px - (40px)*2);
+      height: 100%;
       padding: 40px;
   }
 `;

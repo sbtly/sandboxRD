@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 import { useHover } from "react-use-gesture";
@@ -7,25 +7,74 @@ const vars = {
   left: -120,
 };
 
-const SidebarDiv = styled(animated.div)`
+const SidebarWrapper = styled(animated.div)`
   position: fixed;
-  border-radius: 0 16px 16px 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const SidebarDivStyle = styled(animated.div)`
+  position: absolute;
+  /* border-radius: 0 16px 16px 0; */
   left: vars.left;
   width: 200px;
   /* top: 10px;
   height: calc(100vh - 20px); */
   height: 100%;
   background: #fff;
+  z-index: 200;
 `;
 
-const Sidebar = () => {
-  // const [expand, setExpand] = useState(false);
-  const [animate, set] = useSpring(() => ({ left: vars.left }));
-  const gesture = useHover(({ hovering }) =>
-    set({ left: hovering ? 0 : vars.left })
-  );
+const SidebarDimStyle = styled(animated.div)`
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.3;
+  z-index: 100;
+`;
 
-  return <SidebarDiv {...gesture()} style={animate}></SidebarDiv>;
+const SidebarDiv = (props) => {
+  // const [expand, setExpand] = useState(false);
+  const [animate, setAnimate] = useSpring(() => ({ left: vars.left }));
+
+  // const gesture = useHover(({ hovering }) =>
+  //   setAnimate({ left: hovering ? 0 : vars.left })
+  // );
+
+  const gesture = useHover(({ hovering }) => {
+    setAnimate({ left: hovering ? 0 : vars.left });
+    props.hovered(hovering);
+  });
+
+  return (
+    <SidebarDivStyle {...gesture()} style={animate}>
+      {/* <p>{state.hovered}</p> */}
+    </SidebarDivStyle>
+  );
+};
+
+const SidebarDim = (props) => {
+  console.log(props.hovered);
+
+  const animate = useSpring({
+    opacity: props.hovered ? 0.5 : 0,
+  });
+
+  return <SidebarDimStyle style={animate}></SidebarDimStyle>;
+};
+
+const Sidebar = () => {
+  const [hovered, setHovered] = useState();
+  const receivedHovered = (value) => {
+    // console.log(value);
+    setHovered(value);
+  };
+  return (
+    <SidebarWrapper>
+      <SidebarDiv hovered={receivedHovered}></SidebarDiv>
+      <SidebarDim hovered={hovered}></SidebarDim>
+    </SidebarWrapper>
+  );
 };
 
 export default Sidebar;
