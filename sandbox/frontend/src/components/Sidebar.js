@@ -38,6 +38,12 @@ const SidebarDimStyle = styled(animated.div)`
   /* z-index: 100; */
 `;
 
+const SidebarList = styled(animated.div)`
+  width: 100%;
+  height: 80px;
+  background: salmon;
+`;
+
 const SidebarDiv = (props) => {
   // const [animate, setAnimate] = useSpring(() => ({ left: vars.left }));
   const [animate, setAnimate] = useSpring(() => ({}));
@@ -47,7 +53,11 @@ const SidebarDiv = (props) => {
     props.hovered(hovering);
   });
 
-  return <SidebarDivStyle {...gesture()} style={animate}></SidebarDivStyle>;
+  return (
+    <SidebarDivStyle {...gesture()} style={animate}>
+      <SidebarList></SidebarList>
+    </SidebarDivStyle>
+  );
 };
 
 // const SidebarDim = (props) => {
