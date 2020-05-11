@@ -11,6 +11,7 @@ const SidebarWrapper = styled(animated.div)`
   position: fixed;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 `;
 
 const SidebarDivStyle = styled(animated.div)`
@@ -23,6 +24,7 @@ const SidebarDivStyle = styled(animated.div)`
   height: 100%;
   background: #fff;
   z-index: 200;
+  pointer-events: auto;
 `;
 
 const SidebarDimStyle = styled(animated.div)`
