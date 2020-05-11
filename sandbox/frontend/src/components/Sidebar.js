@@ -79,7 +79,7 @@ const SidebarList = (props) => {
     opacity: props.hovered ? 1 : 0,
   });
 
-  console.log(props.hovered);
+  // console.log(props.hovered);
 
   return (
     <SidebarListStyled>
@@ -95,15 +95,14 @@ const SidebarDiv = (props) => {
   // const [animate, setAnimate] = useSpring(() => ({ left: vars.left }));
   const [animate, setAnimate] = useSpring(() => ({}));
 
-  const gesture = useHover(({ hovering }) => {
-    // setAnimate({ left: hovering ? 0 : vars.left });
-    props.hovered(hovering);
-  });
+  // const gesture = useHover(({ hovering }) => {
+  //   // setAnimate({ left: hovering ? 0 : vars.left });
+  //   props.hovered(hovering);
+  // });
 
   return (
-    <SidebarDivStyle {...gesture()} style={animate}>
-      {props.children}
-    </SidebarDivStyle>
+    // <SidebarDivStyle {...gesture()} style={animate}>
+    <SidebarDivStyle style={animate}>{props.children}</SidebarDivStyle>
   );
 };
 
@@ -118,15 +117,17 @@ const SidebarDiv = (props) => {
 
 export const Sidebar = (props) => {
   const [hovered, setHovered] = useState(null);
-  const receivedHovered = (value) => {
-    setHovered(value);
-    props.hovered(value);
-  };
+
+  const gesture = useHover(({ hovering }) => {
+    props.hovered(hovering);
+    setHovered(hovering);
+  });
 
   // console.log(hovered);
   return (
-    <SidebarWrapper>
-      <SidebarDiv hovered={receivedHovered}>
+    <SidebarWrapper {...gesture()}>
+      {/* <SidebarDiv hovered={receivedHovered}> */}
+      <SidebarDiv>
         <SidebarList
           hovered={hovered}
           icon={"activity"}

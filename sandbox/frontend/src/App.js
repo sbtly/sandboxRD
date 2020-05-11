@@ -13,7 +13,6 @@ const BaseLayout = (props) => {
   const [hovered, setHovered] = useState(null);
   const receivedHovered = (value) => {
     setHovered(value);
-    // props.hovered(value);
   };
 
   console.log(hovered);

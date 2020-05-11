@@ -17,6 +17,7 @@ const ContentStyled = styled(animated.div)`
 export const Content = (props) => {
   const animate = useSpring({
     transform: props.hovered ? "translateX(100px)" : "translateX(0px)",
+    background: props.hovered ? global.colors.bg : "#fff",
     // opacity: props.hovered ? 0.6 : 1,
   });
 
