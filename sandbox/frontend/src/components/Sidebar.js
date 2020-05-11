@@ -35,27 +35,11 @@ const SidebarDimStyle = styled(animated.div)`
   z-index: 100;
 `;
 
-export const ContentStyled = styled(animated.div)`
-  float: right;
-  width: calc(100% - 80px - (40px) * 2);
-  height: 100%;
-  padding: 40px;
-  transform: translateX(0);
-
-  ${SidebarDivStyle}:hover & {
-    transform: translateX(vars.left + "px");
-  }
-`;
-
-export const Content = (props) => {
-  return <ContentStyled>{props.children}</ContentStyled>;
-};
-
 const SidebarDiv = (props) => {
   const [animate, setAnimate] = useSpring(() => ({ left: vars.left }));
 
   const gesture = useHover(({ hovering }) => {
-    // setAnimate({ left: hovering ? 0 : vars.left });
+    setAnimate({ left: hovering ? 0 : vars.left });
     props.hovered(hovering);
   });
 
@@ -75,7 +59,7 @@ const SidebarDim = (props) => {
   return <SidebarDimStyle style={animate}></SidebarDimStyle>;
 };
 
-export const Sidebar = () => {
+const Sidebar = () => {
   const [hovered, setHovered] = useState();
   const receivedHovered = (value) => {
     setHovered(value);
@@ -88,4 +72,4 @@ export const Sidebar = () => {
   );
 };
 
-// export default Sidebar;
+export default Sidebar;

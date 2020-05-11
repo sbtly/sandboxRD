@@ -6,7 +6,7 @@ import UserCreateUpdate from "./UserCreateUpdate";
 import "./normalize.css";
 // import "./App.css";
 import { GlobalStyle } from "./styles";
-import { Sidebar, Content } from "./components/Sidebar";
+import Sidebar from "./components/Sidebar";
 
 const BaseLayout = () => (
   <div className="container">
@@ -35,8 +35,7 @@ const BaseLayout = () => (
         </div>
       </div>
     </nav> */}
-    {/* <div className="content"> */}
-    <Content>
+    <div className="content">
       <a className="nav-item nav-link" href="/">
         Users
       </a>
@@ -46,8 +45,7 @@ const BaseLayout = () => (
       <Route path="/" exact component={UsersList} />
       <Route path="/user/:pk" component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
-      {/* </div> */}
-    </Content>
+    </div>
   </div>
 );
 
