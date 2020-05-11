@@ -43,6 +43,9 @@ const SidebarListStyled = styled(animated.div)`
   width: 100%;
   height: 80px;
   background: salmon;
+
+  display: flex;
+  align-items: center;
 `;
 
 const icons = {
@@ -65,13 +68,26 @@ const SidebarIconStyled = styled(animated.div)`
   background: brown;
 `;
 
+const SidebarTextStyled = styled(animated.div)`
+  width: auto;
+  font-size: 1em;
+`;
+
 const SidebarList = (props) => {
   const Icon = icons[props.icon];
+  const animate = useSpring({
+    transform: props.hovered ? "translateX(-20px)" : "translateX(0px)",
+    opacity: props.hovered ? 1 : 0,
+  });
+
+  console.log(props.hovered);
+
   return (
     <SidebarListStyled>
       <SidebarIconStyled>
         <Icon />
       </SidebarIconStyled>
+      <SidebarTextStyled style={animate}>{props.title}</SidebarTextStyled>
     </SidebarListStyled>
   );
 };
@@ -87,7 +103,7 @@ const SidebarDiv = (props) => {
 
   return (
     <SidebarDivStyle {...gesture()} style={animate}>
-      <SidebarList icon={"activity"}></SidebarList>
+      {props.children}
     </SidebarDivStyle>
   );
 };
@@ -111,7 +127,13 @@ export const Sidebar = (props) => {
   // console.log(hovered);
   return (
     <SidebarWrapper>
-      <SidebarDiv hovered={receivedHovered}></SidebarDiv>
+      <SidebarDiv hovered={receivedHovered}>
+        <SidebarList
+          hovered={hovered}
+          icon={"activity"}
+          title={"요약"}
+        ></SidebarList>
+      </SidebarDiv>
       {/* <SidebarDim hovered={hovered}></SidebarDim> */}
     </SidebarWrapper>
   );
