@@ -36,6 +36,12 @@ const BaseLayout = () => (
       </div>
     </nav> */}
     <div className="content">
+      <a className="nav-item nav-link" href="/">
+        Users
+      </a>
+      <a className="nav-item nav-link" href="/user">
+        CREATE USER
+      </a>
       <Route path="/" exact component={UsersList} />
       <Route path="/user/:pk" component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
