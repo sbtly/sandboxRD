@@ -1,4 +1,14 @@
 import styled, { createGlobalStyle } from "styled-components";
+import "typeface-notosans-kor";
+
+export const global = {
+  colors: {
+    bg: "#fbfbfb",
+  },
+  fonts: {
+    kor: "Noto Sans KR",
+  },
+};
 
 export const GlobalStyle = createGlobalStyle`
   html,
@@ -9,9 +19,9 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     overflow: hidden;
     user-select: none;
-    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
+    font-family: ${global.fonts.kor}, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
       segoe ui, arial, sans-serif;
-    background: #fbfbfb;
+    background: ${global.colors.bg};
   }
 
   #root, .container {
@@ -20,9 +30,14 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .content {
-      float: right;
+      /* float: right; */
+      position: absolute;
+      right: 0;
+      transform: translateX(0px);
       width: calc(100% - 80px - (40px)*2);
       height: 100%;
       padding: 40px;
+      background: ${global.colors.bg};
+
   }
 `;
