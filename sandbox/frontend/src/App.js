@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Route } from "react-router-dom";
 import UsersList from "./UsersList";
@@ -6,13 +6,22 @@ import UserCreateUpdate from "./UserCreateUpdate";
 import "./normalize.css";
 // import "./App.css";
 import { GlobalStyle } from "./styles";
-import Sidebar from "./components/Sidebar";
+import { Sidebar } from "./components/Sidebar";
+import { Content } from "./components/Content";
 
-const BaseLayout = () => (
-  <div className="container">
-    <Sidebar></Sidebar>
-    {/* <div className= */}
-    {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
+const BaseLayout = (props) => {
+  const [hovered, setHovered] = useState(null);
+  const receivedHovered = (value) => {
+    setHovered(value);
+    // props.hovered(value);
+  };
+
+  console.log(hovered);
+
+  return (
+    <div className="container">
+      {/* <div className= */}
+      {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <button
         className="navbar-toggler"
         type="button"
@@ -35,19 +44,24 @@ const BaseLayout = () => (
         </div>
       </div>
     </nav> */}
-    <div className="content">
-      <a className="nav-item nav-link" href="/">
-        Users
-      </a>
-      <a className="nav-item nav-link" href="/user">
-        CREATE USER
-      </a>
-      <Route path="/" exact component={UsersList} />
-      <Route path="/user/:pk" component={UserCreateUpdate} />
-      <Route path="/user/" exact component={UserCreateUpdate} />
+      <Sidebar hovered={receivedHovered}></Sidebar>
+
+      {/* <div className="content"> */}
+      <Content hovered={hovered}>
+        <a className="nav-item nav-link" href="/">
+          Users
+        </a>
+        <a className="nav-item nav-link" href="/user">
+          CREATE USER
+        </a>
+        <Route path="/" exact component={UsersList} />
+        <Route path="/user/:pk" component={UserCreateUpdate} />
+        <Route path="/user/" exact component={UserCreateUpdate} />
+        {/* </div> */}
+      </Content>
     </div>
-  </div>
-);
+  );
+};
 
 const App = () => {
   return (
