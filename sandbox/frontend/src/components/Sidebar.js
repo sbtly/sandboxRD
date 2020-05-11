@@ -42,7 +42,6 @@ const SidebarDimStyle = styled(animated.div)`
 const SidebarListStyled = styled(animated.div)`
   width: 100%;
   height: 80px;
-  background: salmon;
 
   display: flex;
   align-items: center;
@@ -64,8 +63,6 @@ const SidebarIconStyled = styled(animated.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background: brown;
 `;
 
 const SidebarTextStyled = styled(animated.div)`
@@ -76,7 +73,7 @@ const SidebarTextStyled = styled(animated.div)`
 const SidebarList = (props) => {
   const Icon = icons[props.icon];
   const animate = useSpring({
-    transform: props.hovered ? "translateX(-20px)" : "translateX(0px)",
+    transform: props.hovered ? "translateX(-10px)" : "translateX(0px)",
     opacity: props.hovered ? 1 : 0,
   });
 
@@ -132,6 +129,26 @@ export const Sidebar = (props) => {
           hovered={hovered}
           icon={"activity"}
           title={"요약"}
+        ></SidebarList>
+        <SidebarList
+          hovered={hovered}
+          icon={"users"}
+          title={"고객"}
+        ></SidebarList>
+        <SidebarList
+          hovered={hovered}
+          icon={"shoppingbag"}
+          title={"가맹점"}
+        ></SidebarList>
+        <SidebarList
+          hovered={hovered}
+          icon={"tag"}
+          title={"태그"}
+        ></SidebarList>
+        <SidebarList
+          hovered={hovered}
+          icon={"eye"}
+          title={"지켜보기"}
         ></SidebarList>
       </SidebarDiv>
       {/* <SidebarDim hovered={hovered}></SidebarDim> */}
