@@ -67,6 +67,8 @@ const SidebarIconStyled = styled(animated.div)`
 
 const SidebarTextStyled = styled(animated.div)`
   font-size: 1em;
+  font-weight: 500;
+
   transform: translateX(0px);
 `;
 
@@ -82,7 +84,7 @@ const SidebarList = (props) => {
   return (
     <SidebarListStyled>
       <SidebarIconStyled>
-        <Icon />
+        <Icon size={20} />
       </SidebarIconStyled>
       <SidebarTextStyled style={animate}>{props.title}</SidebarTextStyled>
     </SidebarListStyled>

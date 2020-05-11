@@ -1,8 +1,12 @@
 import styled, { createGlobalStyle } from "styled-components";
+import "typeface-notosans-kor";
 
 export const global = {
   colors: {
     bg: "#fbfbfb",
+  },
+  fonts: {
+    kor: "Noto Sans KR",
   },
 };
 
@@ -15,7 +19,7 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     overflow: hidden;
     user-select: none;
-    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
+    font-family: ${global.fonts.kor}, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
       segoe ui, arial, sans-serif;
     background: ${global.colors.bg};
   }
