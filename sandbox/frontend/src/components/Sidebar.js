@@ -74,5 +74,3 @@ export const Sidebar = (props) => {
     </SidebarWrapper>
   );
 };
-
-// export default Sidebar;
