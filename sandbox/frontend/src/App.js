@@ -1,39 +1,16 @@
-// import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Route } from "react-router-dom";
 import UsersList from "./UsersList";
 import UserCreateUpdate from "./UserCreateUpdate";
-import "./App.css";
+import "./normalize.css";
+// import "./App.css";
+import { GlobalStyle } from "./styles";
+import Sidebar from "./components/Sidebar";
 
 const BaseLayout = () => (
   <div className="container">
+    <Sidebar></Sidebar>
     {/* <div className= */}
     {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <button
@@ -59,6 +36,12 @@ const BaseLayout = () => (
       </div>
     </nav> */}
     <div className="content">
+      <a className="nav-item nav-link" href="/">
+        Users
+      </a>
+      <a className="nav-item nav-link" href="/user">
+        CREATE USER
+      </a>
       <Route path="/" exact component={UsersList} />
       <Route path="/user/:pk" component={UserCreateUpdate} />
       <Route path="/user/" exact component={UserCreateUpdate} />
@@ -69,6 +52,7 @@ const BaseLayout = () => (
 const App = () => {
   return (
     <BrowserRouter>
+      <GlobalStyle></GlobalStyle>
       <BaseLayout></BaseLayout>
     </BrowserRouter>
   );
