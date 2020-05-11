@@ -66,8 +66,8 @@ const SidebarIconStyled = styled(animated.div)`
 `;
 
 const SidebarTextStyled = styled(animated.div)`
-  width: auto;
   font-size: 1em;
+  transform: translateX(0px);
 `;
 
 const SidebarList = (props) => {
