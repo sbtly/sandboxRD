@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 import { useHover } from "react-use-gesture";
-import feather from "feather-icons";
+import { X } from "react-feather";
 
 // const vars = {
 //   left: -120,
@@ -48,15 +48,21 @@ const SidebarListStyled = styled(animated.div)`
 const SidebarIconStyled = styled(animated.div)`
   width: 80px;
   height: 100%;
-  text-align: center;
+
+  /* centering hack */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background: brown;
 `;
 
 const SidebarList = (props) => {
-  const icon = feather.icons.x.toSvg();
   return (
     <SidebarListStyled>
-      <SidebarIconStyled>{icon}</SidebarIconStyled>
+      <SidebarIconStyled>
+        <X></X>
+      </SidebarIconStyled>
     </SidebarListStyled>
   );
 };
