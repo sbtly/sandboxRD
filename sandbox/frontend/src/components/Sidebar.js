@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 import { useHover } from "react-use-gesture";
-import { X } from "react-feather";
+import { Activity, Users, ShoppingBag, Tag, Eye } from "react-feather";
 
 // const vars = {
 //   left: -120,
@@ -45,6 +45,14 @@ const SidebarListStyled = styled(animated.div)`
   background: salmon;
 `;
 
+const icons = {
+  activity: Activity,
+  users: Users,
+  shoppingbag: ShoppingBag,
+  tag: Tag,
+  eye: Eye,
+};
+
 const SidebarIconStyled = styled(animated.div)`
   width: 80px;
   height: 100%;
@@ -58,10 +66,11 @@ const SidebarIconStyled = styled(animated.div)`
 `;
 
 const SidebarList = (props) => {
+  const Icon = icons[props.icon];
   return (
     <SidebarListStyled>
       <SidebarIconStyled>
-        <X></X>
+        <Icon />
       </SidebarIconStyled>
     </SidebarListStyled>
   );
@@ -78,7 +87,7 @@ const SidebarDiv = (props) => {
 
   return (
     <SidebarDivStyle {...gesture()} style={animate}>
-      <SidebarList></SidebarList>
+      <SidebarList icon={"activity"}></SidebarList>
     </SidebarDivStyle>
   );
 };
