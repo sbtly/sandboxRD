@@ -11,6 +11,11 @@ export const global = {
 };
 
 export const GlobalStyle = createGlobalStyle`
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   html,
   body {
     margin: 0;
