@@ -67,6 +67,7 @@ const SidebarCurrentStyled = styled(animated.div)`
 
 // Context
 export const SidebarPathContext = createContext();
+export const SidebarCurrentContext = createContext();
 
 // Component
 const SidebarList = (props) => {
@@ -111,52 +112,77 @@ const SidebarList = (props) => {
 
 const SidebarDiv = (props) => {
   const { sidebarHovered, setSidebarHovered } = useContext(SidebarHoverContext);
-  const { currentPath } = useContext(SidebarPathContext);
+  const { currentList } = useContext(SidebarCurrentContext);
 
   const gesture = useHover(({ hovering }) => {
     setSidebarHovered(hovering);
   });
-  const animate = useSpring({
+  const divAnimate = useSpring({
     background: sidebarHovered ? "#fff" : "rgba(255,255,255,0)",
   });
 
+  const currentAnimate = useSpring({
+    transform: `translateY(${currentList * 80 + "px"})`,
+  });
+
   return (
-    <SidebarDivStyle {...gesture()} style={animate}>
-      <SidebarCurrentStyled />
+    <SidebarDivStyle {...gesture()} style={divAnimate}>
+      <SidebarCurrentStyled style={currentAnimate} />
       {props.children}
     </SidebarDivStyle>
   );
 };
 
+const sidebarListOrder = ["/user", "/", "/merch", "/tag", "/watch"];
 export const Sidebar = (props) => {
   let location = useLocation();
   const [currentPath, setCurrentPath] = useState(null);
+  const [currentList, setCurrentList] = useState(
+    sidebarListOrder.indexOf(location.pathname)
+  );
+
   useEffect(() => {
     setCurrentPath(location.pathname);
+    setCurrentList(sidebarListOrder.indexOf(location.pathname));
   }, [location.pathname]);
 
   return (
     <SidebarPathContext.Provider value={{ currentPath, setCurrentPath }}>
       <SidebarWrapper>
-        <SidebarDiv>
-          <SidebarList
-            href={"/user"}
-            icon={"activity"}
-            title={"요약"}
-          ></SidebarList>
-          <SidebarList href={"/"} icon={"users"} title={"고객"}></SidebarList>
-          <SidebarList
-            href={"/merch"}
-            icon={"shoppingbag"}
-            title={"가맹점"}
-          ></SidebarList>
-          <SidebarList href={"/tag"} icon={"tag"} title={"태그"}></SidebarList>
-          <SidebarList
-            href={"/watch"}
-            icon={"eye"}
-            title={"지켜보기"}
-          ></SidebarList>
-        </SidebarDiv>
+        <SidebarCurrentContext.Provider value={{ currentList, setCurrentList }}>
+          <SidebarDiv>
+            <SidebarList
+              no="0"
+              href={"/user"}
+              icon={"activity"}
+              title={"요약"}
+            ></SidebarList>
+            <SidebarList
+              no="1"
+              href={"/"}
+              icon={"users"}
+              title={"고객"}
+            ></SidebarList>
+            <SidebarList
+              no="2"
+              href={"/merch"}
+              icon={"shoppingbag"}
+              title={"가맹점"}
+            ></SidebarList>
+            <SidebarList
+              no="3"
+              href={"/tag"}
+              icon={"tag"}
+              title={"태그"}
+            ></SidebarList>
+            <SidebarList
+              no="4"
+              href={"/watch"}
+              icon={"eye"}
+              title={"지켜보기"}
+            ></SidebarList>
+          </SidebarDiv>
+        </SidebarCurrentContext.Provider>
       </SidebarWrapper>
     </SidebarPathContext.Provider>
   );
