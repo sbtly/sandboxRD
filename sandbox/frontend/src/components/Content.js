@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 // import { useHover } from "react-use-gesture";
 import { global } from "../styles";
-import { SidebarContext } from "../App";
+import { SidebarHoverContext } from "../App";
 
 const ContentStyled = styled(animated.div)`
   position: absolute;
@@ -17,7 +17,7 @@ const ContentStyled = styled(animated.div)`
 `;
 
 export const Content = (props) => {
-  const { sidebarHovered } = useContext(SidebarContext);
+  const { sidebarHovered } = useContext(SidebarHoverContext);
   const animate = useSpring({
     transform: sidebarHovered ? "translateX(100px)" : "translateX(0px)",
     background: sidebarHovered ? global.colors.bg : "rgba(255,255,255,0)",
