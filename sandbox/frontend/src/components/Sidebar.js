@@ -1,17 +1,14 @@
 import React, { useState, useContext } from "react";
+import { NavLink } from "react-router-dom";
+
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 import { useHover } from "react-use-gesture";
 import { Activity, Users, ShoppingBag, Tag, Eye } from "react-feather";
 import { SidebarContext } from "../App";
 
-// const vars = {
-//   left: -120,
-// };
-
 const SidebarWrapper = styled(animated.div)`
   position: fixed;
-  /* width: 100%; */
   width: 200px;
   height: 100%;
   pointer-events: none;
@@ -19,25 +16,10 @@ const SidebarWrapper = styled(animated.div)`
 
 const SidebarDivStyle = styled(animated.div)`
   position: absolute;
-  /* border-radius: 0 16px 16px 0; */
-  /* left: vars.left; */
-
-  /* width: 200px; */
   width: 100%;
-  /* top: 10px;
-  height: calc(100vh - 20px); */
   height: 100%;
   background: #fff;
-  /* z-index: 200; */
   pointer-events: auto;
-`;
-
-const SidebarDimStyle = styled(animated.div)`
-  width: 100%;
-  height: 100%;
-  background-color: whitesmoke;
-  opacity: 0.3;
-  /* z-index: 100; */
 `;
 
 const SidebarListStyled = styled(animated.div)`
@@ -82,12 +64,14 @@ const SidebarList = (props) => {
   });
 
   return (
-    <SidebarListStyled>
-      <SidebarIconStyled>
-        <Icon size={20} />
-      </SidebarIconStyled>
-      <SidebarTextStyled style={animate}>{props.title}</SidebarTextStyled>
-    </SidebarListStyled>
+    <NavLink to={props.href}>
+      <SidebarListStyled>
+        <SidebarIconStyled>
+          <Icon size={20} />
+        </SidebarIconStyled>
+        <SidebarTextStyled style={animate}>{props.title}</SidebarTextStyled>
+      </SidebarListStyled>
+    </NavLink>
   );
 };
 
@@ -112,11 +96,15 @@ export const Sidebar = (props) => {
   return (
     <SidebarWrapper>
       <SidebarDiv>
-        <SidebarList icon={"activity"} title={"요약"}></SidebarList>
-        <SidebarList icon={"users"} title={"고객"}></SidebarList>
-        <SidebarList icon={"shoppingbag"} title={"가맹점"}></SidebarList>
-        <SidebarList icon={"tag"} title={"태그"}></SidebarList>
-        <SidebarList icon={"eye"} title={"지켜보기"}></SidebarList>
+        <SidebarList href={"/"} icon={"activity"} title={"요약"}></SidebarList>
+        <SidebarList href={"/"} icon={"users"} title={"고객"}></SidebarList>
+        <SidebarList
+          href={"/"}
+          icon={"shoppingbag"}
+          title={"가맹점"}
+        ></SidebarList>
+        <SidebarList href={"/"} icon={"tag"} title={"태그"}></SidebarList>
+        <SidebarList href={"/"} icon={"eye"} title={"지켜보기"}></SidebarList>
       </SidebarDiv>
     </SidebarWrapper>
   );
