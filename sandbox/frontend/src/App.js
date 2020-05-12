@@ -8,7 +8,7 @@ import { GlobalStyle } from "./styles";
 import { Sidebar } from "./components/Sidebar";
 import { Content } from "./components/Content";
 
-export const SidebarContext = createContext();
+export const SidebarHoverContext = createContext();
 
 const BaseLayout = (props) => {
   const [sidebarHovered, setSidebarHovered] = useState(null);
@@ -40,7 +40,9 @@ const BaseLayout = (props) => {
       </div>
     </nav> */}
 
-      <SidebarContext.Provider value={{ sidebarHovered, setSidebarHovered }}>
+      <SidebarHoverContext.Provider
+        value={{ sidebarHovered, setSidebarHovered }}
+      >
         <Sidebar />
         <Content>
           <a className="nav-item nav-link" href="/">
@@ -53,7 +55,7 @@ const BaseLayout = (props) => {
           <Route path="/user/:pk" component={UserCreateUpdate} />
           <Route path="/user/" exact component={UserCreateUpdate} />
         </Content>
-      </SidebarContext.Provider>
+      </SidebarHoverContext.Provider>
     </div>
   );
 };
