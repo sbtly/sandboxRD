@@ -56,20 +56,30 @@ const SidebarTextStyled = styled(animated.div)`
 `;
 
 const SidebarList = (props) => {
+  const [listHovered, setListHovered] = useState(null);
   const { sidebarHovered } = useContext(SidebarContext);
   const Icon = icons[props.icon];
-  const animate = useSpring({
+
+  const gesture = useHover(({ hovering }) => {
+    setListHovered(hovering);
+  });
+
+  const textAnimate = useSpring({
     transform: sidebarHovered ? "translateX(-10px)" : "translateX(0px)",
     opacity: sidebarHovered ? 1 : 0,
   });
 
+  const hoverAnimate = useSpring({
+    opacity: listHovered ? 1 : 0.3,
+  });
+
   return (
-    <NavLink to={props.href}>
-      <SidebarListStyled>
+    <NavLink to={props.href} {...gesture()}>
+      <SidebarListStyled style={hoverAnimate}>
         <SidebarIconStyled>
           <Icon size={20} />
         </SidebarIconStyled>
-        <SidebarTextStyled style={animate}>{props.title}</SidebarTextStyled>
+        <SidebarTextStyled style={textAnimate}>{props.title}</SidebarTextStyled>
       </SidebarListStyled>
     </NavLink>
   );
@@ -96,15 +106,23 @@ export const Sidebar = (props) => {
   return (
     <SidebarWrapper>
       <SidebarDiv>
-        <SidebarList href={"/"} icon={"activity"} title={"요약"}></SidebarList>
+        <SidebarList
+          href={"/user"}
+          icon={"activity"}
+          title={"요약"}
+        ></SidebarList>
         <SidebarList href={"/"} icon={"users"} title={"고객"}></SidebarList>
         <SidebarList
-          href={"/"}
+          href={"/merch"}
           icon={"shoppingbag"}
           title={"가맹점"}
         ></SidebarList>
-        <SidebarList href={"/"} icon={"tag"} title={"태그"}></SidebarList>
-        <SidebarList href={"/"} icon={"eye"} title={"지켜보기"}></SidebarList>
+        <SidebarList href={"/tag"} icon={"tag"} title={"태그"}></SidebarList>
+        <SidebarList
+          href={"/watch"}
+          icon={"eye"}
+          title={"지켜보기"}
+        ></SidebarList>
       </SidebarDiv>
     </SidebarWrapper>
   );
