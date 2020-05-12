@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 import { useHover } from "react-use-gesture";
 import { Activity, Users, ShoppingBag, Tag, Eye } from "react-feather";
-
-// const vars = {
-//   left: -120,
-// };
+import { SidebarContext } from "../App";
 
 const SidebarWrapper = styled(animated.div)`
   position: fixed;
-  /* width: 100%; */
   width: 200px;
   height: 100%;
   pointer-events: none;
@@ -18,25 +16,10 @@ const SidebarWrapper = styled(animated.div)`
 
 const SidebarDivStyle = styled(animated.div)`
   position: absolute;
-  /* border-radius: 0 16px 16px 0; */
-  /* left: vars.left; */
-
-  /* width: 200px; */
   width: 100%;
-  /* top: 10px;
-  height: calc(100vh - 20px); */
   height: 100%;
   background: #fff;
-  /* z-index: 200; */
   pointer-events: auto;
-`;
-
-const SidebarDimStyle = styled(animated.div)`
-  width: 100%;
-  height: 100%;
-  background-color: whitesmoke;
-  opacity: 0.3;
-  /* z-index: 100; */
 `;
 
 const SidebarListStyled = styled(animated.div)`
@@ -72,89 +55,95 @@ const SidebarTextStyled = styled(animated.div)`
   transform: translateX(0px);
 `;
 
+const SidebarCurrentStyled = styled(animated.div)`
+  width: 4px;
+  height: 50%;
+  background: black;
+`;
+
+// Component
 const SidebarList = (props) => {
+  let location = useLocation();
+  const [currentPath, setCurrentPath] = useState(null);
+  useEffect(() => {
+    setCurrentPath(location.pathname);
+  }, [location.pathname]);
+
+  const [listHovered, setListHovered] = useState(null);
+  const { sidebarHovered } = useContext(SidebarContext);
   const Icon = icons[props.icon];
-  const animate = useSpring({
-    transform: props.hovered ? "translateX(-10px)" : "translateX(0px)",
-    opacity: props.hovered ? 1 : 0,
+
+  const gesture = useHover(({ hovering }) => {
+    setListHovered(hovering);
   });
 
-  // console.log(props.hovered);
+  const textAnimate = useSpring({
+    transform: sidebarHovered ? "translateX(-10px)" : "translateX(0px)",
+    opacity: sidebarHovered ? 1 : 0,
+  });
+
+  const hoverAnimate = useSpring({
+    opacity: currentPath === props.href || listHovered ? 1 : 0.3,
+  });
+
+  // const currentStyle =
+  //   currentPath === props.href ? { opacity: 1 } : { opacity: 0 };
+  const currentAnimate = useSpring({
+    opacity: currentPath === props.href ? 1 : 0,
+  });
 
   return (
-    <SidebarListStyled>
-      <SidebarIconStyled>
-        <Icon size={20} />
-      </SidebarIconStyled>
-      <SidebarTextStyled style={animate}>{props.title}</SidebarTextStyled>
-    </SidebarListStyled>
+    <NavLink to={props.href} {...gesture()}>
+      <SidebarListStyled style={hoverAnimate}>
+        <SidebarCurrentStyled style={currentAnimate} />
+        <SidebarIconStyled>
+          <Icon size={20} />
+        </SidebarIconStyled>
+        <SidebarTextStyled style={textAnimate}>{props.title}</SidebarTextStyled>
+      </SidebarListStyled>
+    </NavLink>
   );
 };
 
 const SidebarDiv = (props) => {
-  // const [animate, setAnimate] = useSpring(() => ({ left: vars.left }));
-  const [animate, setAnimate] = useSpring(() => ({}));
+  const { sidebarHovered, setSidebarHovered } = useContext(SidebarContext);
 
-  // const gesture = useHover(({ hovering }) => {
-  //   // setAnimate({ left: hovering ? 0 : vars.left });
-  //   props.hovered(hovering);
-  // });
+  const gesture = useHover(({ hovering }) => {
+    setSidebarHovered(hovering);
+  });
+  const animate = useSpring({
+    background: sidebarHovered ? "#fff" : "rgba(255,255,255,0)",
+  });
 
   return (
-    // <SidebarDivStyle {...gesture()} style={animate}>
-    <SidebarDivStyle style={animate}>{props.children}</SidebarDivStyle>
+    <SidebarDivStyle {...gesture()} style={animate}>
+      {props.children}
+    </SidebarDivStyle>
   );
 };
 
-// const SidebarDim = (props) => {
-//   // console.log(props.hovered);
-//   const animate = useSpring({
-//     opacity: props.hovered ? 0.5 : 0,
-//   });
-
-//   return <SidebarDimStyle style={animate}></SidebarDimStyle>;
-// };
-
 export const Sidebar = (props) => {
-  const [hovered, setHovered] = useState(null);
-
-  const gesture = useHover(({ hovering }) => {
-    props.hovered(hovering);
-    setHovered(hovering);
-  });
-
-  // console.log(hovered);
   return (
-    <SidebarWrapper {...gesture()}>
-      {/* <SidebarDiv hovered={receivedHovered}> */}
+    <SidebarWrapper>
       <SidebarDiv>
         <SidebarList
-          hovered={hovered}
+          href={"/user"}
           icon={"activity"}
           title={"요약"}
         ></SidebarList>
+        <SidebarList href={"/"} icon={"users"} title={"고객"}></SidebarList>
         <SidebarList
-          hovered={hovered}
-          icon={"users"}
-          title={"고객"}
-        ></SidebarList>
-        <SidebarList
-          hovered={hovered}
+          href={"/merch"}
           icon={"shoppingbag"}
           title={"가맹점"}
         ></SidebarList>
+        <SidebarList href={"/tag"} icon={"tag"} title={"태그"}></SidebarList>
         <SidebarList
-          hovered={hovered}
-          icon={"tag"}
-          title={"태그"}
-        ></SidebarList>
-        <SidebarList
-          hovered={hovered}
+          href={"/watch"}
           icon={"eye"}
           title={"지켜보기"}
         ></SidebarList>
       </SidebarDiv>
-      {/* <SidebarDim hovered={hovered}></SidebarDim> */}
     </SidebarWrapper>
   );
 };

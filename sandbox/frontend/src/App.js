@@ -1,21 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Route } from "react-router-dom";
 import UsersList from "./UsersList";
 import UserCreateUpdate from "./UserCreateUpdate";
 import "./normalize.css";
-// import "./App.css";
 import { GlobalStyle } from "./styles";
 import { Sidebar } from "./components/Sidebar";
 import { Content } from "./components/Content";
 
-const BaseLayout = (props) => {
-  const [hovered, setHovered] = useState(null);
-  const receivedHovered = (value) => {
-    setHovered(value);
-  };
+export const SidebarContext = createContext();
 
-  console.log(hovered);
+const BaseLayout = (props) => {
+  const [sidebarHovered, setSidebarHovered] = useState(null);
 
   return (
     <div className="container">
@@ -43,21 +39,21 @@ const BaseLayout = (props) => {
         </div>
       </div>
     </nav> */}
-      <Sidebar hovered={receivedHovered}></Sidebar>
 
-      {/* <div className="content"> */}
-      <Content hovered={hovered}>
-        <a className="nav-item nav-link" href="/">
-          Users
-        </a>
-        <a className="nav-item nav-link" href="/user">
-          CREATE USER
-        </a>
-        <Route path="/" exact component={UsersList} />
-        <Route path="/user/:pk" component={UserCreateUpdate} />
-        <Route path="/user/" exact component={UserCreateUpdate} />
-        {/* </div> */}
-      </Content>
+      <SidebarContext.Provider value={{ sidebarHovered, setSidebarHovered }}>
+        <Sidebar />
+        <Content>
+          <a className="nav-item nav-link" href="/">
+            Users
+          </a>
+          <a className="nav-item nav-link" href="/user">
+            CREATE USER
+          </a>
+          <Route path="/" exact component={UsersList} />
+          <Route path="/user/:pk" component={UserCreateUpdate} />
+          <Route path="/user/" exact component={UserCreateUpdate} />
+        </Content>
+      </SidebarContext.Provider>
     </div>
   );
 };
