@@ -4,7 +4,6 @@ import { Route } from "react-router-dom";
 import UsersList from "./UsersList";
 import UserCreateUpdate from "./UserCreateUpdate";
 import "./normalize.css";
-// import "./App.css";
 import { GlobalStyle } from "./styles";
 import { Sidebar } from "./components/Sidebar";
 import { Content } from "./components/Content";
@@ -13,12 +12,6 @@ export const SidebarContext = createContext();
 
 const BaseLayout = (props) => {
   const [sidebarHovered, setSidebarHovered] = useState(null);
-
-  // const receivedHovered = (value) => {
-  //   setHovered(value);
-  // };
-
-  // console.log(hovered);
 
   return (
     <div className="container">
