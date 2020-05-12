@@ -64,8 +64,6 @@ const SidebarCurrentStyled = styled(animated.div)`
 // Component
 const SidebarList = (props) => {
   let location = useLocation();
-  console.log(location.pathname);
-
   const [currentPath, setCurrentPath] = useState(null);
   useEffect(() => {
     setCurrentPath(location.pathname);
