@@ -62,15 +62,16 @@ const SidebarCurrentStyled = styled(animated.div)`
   margin: 20px 0 20px 0;
   /* height: 50%; */
   background: black;
+  transform: translateY(0px);
 `;
 
 // Context
-export const SidebarCurrentContext = createContext();
+export const SidebarPathContext = createContext();
 
 // Component
 const SidebarList = (props) => {
   const { sidebarHovered } = useContext(SidebarHoverContext);
-  const { currentPath } = useContext(SidebarCurrentContext);
+  const { currentPath } = useContext(SidebarPathContext);
 
   const [listHovered, setListHovered] = useState(null);
   const Icon = icons[props.icon];
@@ -110,7 +111,7 @@ const SidebarList = (props) => {
 
 const SidebarDiv = (props) => {
   const { sidebarHovered, setSidebarHovered } = useContext(SidebarHoverContext);
-  const { currentPath } = useContext(SidebarCurrentContext);
+  const { currentPath } = useContext(SidebarPathContext);
 
   const gesture = useHover(({ hovering }) => {
     setSidebarHovered(hovering);
@@ -135,7 +136,7 @@ export const Sidebar = (props) => {
   }, [location.pathname]);
 
   return (
-    <SidebarCurrentContext.Provider value={{ currentPath, setCurrentPath }}>
+    <SidebarPathContext.Provider value={{ currentPath, setCurrentPath }}>
       <SidebarWrapper>
         <SidebarDiv>
           <SidebarList
@@ -157,6 +158,6 @@ export const Sidebar = (props) => {
           ></SidebarList>
         </SidebarDiv>
       </SidebarWrapper>
-    </SidebarCurrentContext.Provider>
+    </SidebarPathContext.Provider>
   );
 };
