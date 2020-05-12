@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
@@ -55,7 +55,22 @@ const SidebarTextStyled = styled(animated.div)`
   transform: translateX(0px);
 `;
 
+const SidebarCurrentStyled = styled(animated.div)`
+  width: 4px;
+  height: 50%;
+  background: black;
+`;
+
+// Component
 const SidebarList = (props) => {
+  let location = useLocation();
+  console.log(location.pathname);
+
+  const [currentPath, setCurrentPath] = useState(null);
+  useEffect(() => {
+    setCurrentPath(location.pathname);
+  }, [location.pathname]);
+
   const [listHovered, setListHovered] = useState(null);
   const { sidebarHovered } = useContext(SidebarContext);
   const Icon = icons[props.icon];
@@ -70,12 +85,19 @@ const SidebarList = (props) => {
   });
 
   const hoverAnimate = useSpring({
-    opacity: listHovered ? 1 : 0.3,
+    opacity: currentPath === props.href || listHovered ? 1 : 0.3,
+  });
+
+  // const currentStyle =
+  //   currentPath === props.href ? { opacity: 1 } : { opacity: 0 };
+  const currentAnimate = useSpring({
+    opacity: currentPath === props.href ? 1 : 0,
   });
 
   return (
     <NavLink to={props.href} {...gesture()}>
       <SidebarListStyled style={hoverAnimate}>
+        <SidebarCurrentStyled style={currentAnimate} />
         <SidebarIconStyled>
           <Icon size={20} />
         </SidebarIconStyled>
