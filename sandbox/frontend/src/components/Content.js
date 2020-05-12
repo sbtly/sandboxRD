@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
 // import { useHover } from "react-use-gesture";
 import { global } from "../styles";
+import { SidebarContext } from "../App";
 
 const ContentStyled = styled(animated.div)`
   position: absolute;
@@ -11,14 +12,15 @@ const ContentStyled = styled(animated.div)`
   width: calc(100% - 80px - (40px) * 2);
   height: 100%;
   padding: 40px;
-  background: ${global.colors.bg};
+  /* background: ${global.colors.bg}; */
+  background: transparent;
 `;
 
 export const Content = (props) => {
+  const { sidebarHovered } = useContext(SidebarContext);
   const animate = useSpring({
-    transform: props.hovered ? "translateX(100px)" : "translateX(0px)",
-    background: props.hovered ? global.colors.bg : "#fff",
-    // opacity: props.hovered ? 0.6 : 1,
+    transform: sidebarHovered ? "translateX(100px)" : "translateX(0px)",
+    background: sidebarHovered ? global.colors.bg : "rgba(255,255,255,0)",
   });
 
   return <ContentStyled style={animate}>{props.children}</ContentStyled>;
