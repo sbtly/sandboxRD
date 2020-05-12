@@ -1,6 +1,5 @@
 import React, { useState, createContext } from "react";
-import { BrowserRouter } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import UsersList from "./UsersList";
 import UserCreateUpdate from "./UserCreateUpdate";
 import "./normalize.css";
@@ -45,12 +44,8 @@ const BaseLayout = (props) => {
       >
         <Sidebar />
         <Content>
-          <a className="nav-item nav-link" href="/">
-            Users
-          </a>
-          <a className="nav-item nav-link" href="/user">
-            CREATE USER
-          </a>
+          <Link to="/">Users</Link>
+          <Link to="/user">CREATE USER</Link>
           <Route path="/" exact component={UsersList} />
           <Route path="/user/:pk" component={UserCreateUpdate} />
           <Route path="/user/" exact component={UserCreateUpdate} />
