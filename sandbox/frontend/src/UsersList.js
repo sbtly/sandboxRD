@@ -45,7 +45,6 @@ const UsersList = () => {
         phone: u.phone,
         address: u.address,
         description: u.description,
-        createdAt: u.createdAt,
       })),
     [users]
   );
@@ -79,10 +78,6 @@ const UsersList = () => {
       {
         Header: "description",
         accessor: "description",
-      },
-      {
-        Header: "Created At",
-        accessor: "createdAt",
       },
     ],
     []
