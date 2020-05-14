@@ -1,6 +1,34 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import UserAPI from "./UserAPI";
 import { useTable } from "react-table";
+import styled from "styled-components";
+import { animated } from "react-spring";
+
+// styled
+
+const TableStyled = styled(animated.table)`
+  border-collapse: collapse;
+`;
+
+const THeadStyled = styled(animated.thead)`
+  /* border-collapse: collapse; */
+`;
+
+const TBodyStyled = styled(animated.tbody)`
+  /* border-collapse: collapse; */
+`;
+
+const ThStyled = styled(animated.th)`
+  /* border-collapse: collapse; */
+`;
+
+const TrStyled = styled(animated.tr)`
+  /* border-collapse: collapse; */
+`;
+
+const TdStyled = styled(animated.td)`
+  /* border-collapse: collapse; */
+`;
 
 const userAPI = new UserAPI();
 
@@ -103,24 +131,28 @@ const UsersList = () => {
 
   return (
     <div className="usersList">
-      <table {...getTableProps()}>
-        <thead>
+      <TableStyled {...getTableProps()}>
+        <THeadStyled>
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <TrStyled {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <ThStyled {...column.getHeaderProps()}>
+                  {column.render("Header")}
+                </ThStyled>
               ))}
-            </tr>
+            </TrStyled>
           ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
+        </THeadStyled>
+        <TBodyStyled {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <TrStyled {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <TdStyled {...cell.getCellProps()}>
+                      {cell.render("Cell")}
+                    </TdStyled>
                   );
                 })}
                 {/* <td>
@@ -129,11 +161,11 @@ const UsersList = () => {
                   </button>
                   <a href={"/user/" + data[i].pk}>Update</a>
                 </td> */}
-              </tr>
+              </TrStyled>
             );
           })}
-        </tbody>
-      </table>
+        </TBodyStyled>
+      </TableStyled>
 
       <button className="btn" onClick={prevPage}>
         Prev
