@@ -5,13 +5,19 @@ import styled from "styled-components";
 import { animated } from "react-spring";
 
 // styled
+const TableWrapperStyled = styled(animated.div)`
+  overflow-x: auto;
+`;
 
 const TableStyled = styled(animated.table)`
   border-collapse: collapse;
+  font-size: 0.8em;
+  text-align: left;
 `;
 
 const THeadStyled = styled(animated.thead)`
   /* border-collapse: collapse; */
+  background: rgba(0, 0, 0, 0.04);
 `;
 
 const TBodyStyled = styled(animated.tbody)`
@@ -20,14 +26,22 @@ const TBodyStyled = styled(animated.tbody)`
 
 const ThStyled = styled(animated.th)`
   /* border-collapse: collapse; */
+  padding: 0.5em 1em;
 `;
 
 const TrStyled = styled(animated.tr)`
   /* border-collapse: collapse; */
+  :nth-child(even) {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  :hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
 `;
 
 const TdStyled = styled(animated.td)`
   /* border-collapse: collapse; */
+  padding: 0.8em 1em;
 `;
 
 const userAPI = new UserAPI();
@@ -130,7 +144,7 @@ const UsersList = () => {
   }, []);
 
   return (
-    <div className="usersList">
+    <TableWrapperStyled className="usersList">
       <TableStyled {...getTableProps()}>
         <THeadStyled>
           {headerGroups.map((headerGroup) => (
@@ -173,7 +187,7 @@ const UsersList = () => {
       <button className="btn" onClick={nextPage}>
         Next
       </button>
-    </div>
+    </TableWrapperStyled>
   );
 };
 
