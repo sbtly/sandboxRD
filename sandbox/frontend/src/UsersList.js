@@ -7,6 +7,7 @@ const userAPI = new UserAPI();
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [nextPageURL, setNextPageURL] = useState("");
+  const [prevPageURL, setPrevPageURL] = useState("");
 
   const nextPage = useCallback(() => {
     userAPI.getUsersByURL(nextPageURL).then((result) => {
@@ -14,6 +15,13 @@ const UsersList = () => {
       setNextPageURL(result.nextlink);
     });
   }, [nextPageURL]);
+
+  const prevPage = useCallback(() => {
+    userAPI.getUsersByURL(prevPageURL).then((result) => {
+      setUsers(result.data);
+      setNextPageURL(result.prevlink);
+    });
+  }, [prevPageURL]);
 
   const handleDelete = useCallback(
     (e, pk) => {
@@ -33,6 +41,10 @@ const UsersList = () => {
         pk: u.pk,
         first_name: u.first_name,
         last_name: u.last_name,
+        email: u.email,
+        phone: u.phone,
+        address: u.address,
+        description: u.description,
       })),
     [users]
   );
@@ -50,6 +62,22 @@ const UsersList = () => {
       {
         Header: "Last Name",
         accessor: "last_name",
+      },
+      {
+        Header: "email",
+        accessor: "email",
+      },
+      {
+        Header: "phone",
+        accessor: "phone",
+      },
+      {
+        Header: "address",
+        accessor: "address",
+      },
+      {
+        Header: "description",
+        accessor: "description",
       },
     ],
     []
@@ -69,39 +97,12 @@ const UsersList = () => {
     userAPI.getUsers().then(function (result) {
       setUsers(result.data);
       setNextPageURL(result.nextlink);
+      setPrevPageURL(result.prevlink);
     });
   }, []);
 
   return (
     <div className="usersList">
-      {/* <table className="table">
-        <thead key="thead">
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((u) => (
-            <tr key={u.pk}>
-              <td>{u.pk}</td>
-              <td>{u.first_name}</td>
-              <td>{u.last_name}</td>
-              <td>
-                <button onClick={(e) => handleDelete(e, u.pk)}>Delete</button>
-                <a href={"/user/" + u.pk}>Update</a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
-
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -122,18 +123,21 @@ const UsersList = () => {
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   );
                 })}
-                <td>
+                {/* <td>
                   <button onClick={(e) => handleDelete(e, data[i].pk)}>
                     Delete
                   </button>
                   <a href={"/user/" + data[i].pk}>Update</a>
-                </td>
+                </td> */}
               </tr>
             );
           })}
         </tbody>
       </table>
 
+      <button className="btn" onClick={prevPage}>
+        Prev
+      </button>
       <button className="btn" onClick={nextPage}>
         Next
       </button>

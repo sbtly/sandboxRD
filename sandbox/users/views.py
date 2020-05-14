@@ -33,7 +33,7 @@ def users_list(request):
         if data.has_previous():
             previousPage = data.previous_page_number()
 
-        return Response({'data': serializer.data, 'count': paginator.count, 'numpages': paginator.num_pages, 'nextlink': '/api/users/?page='+str(nextPage), 'prevlink': '/api/customers/?page='+str(previousPage)})
+        return Response({'data': serializer.data, 'count': paginator.count, 'numpages': paginator.num_pages, 'nextlink': '/api/users/?page='+str(nextPage), 'prevlink': '/api/users/?page='+str(previousPage)})
 
     elif request.method == 'POST':
         serializer = UserSerializer(data=request.data)
