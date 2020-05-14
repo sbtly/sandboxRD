@@ -7,34 +7,36 @@ import { animated } from "react-spring";
 // styled
 const TableWrapperStyled = styled(animated.div)`
   /* overflow-x: auto; */
-  display: block;
+  /* display: block; */
 `;
 
-// const TableStyled = styled(animated.table)`
-const TableStyled = styled(animated.div)`
-  /* border-collapse: collapse; */
-  /* border-spacing: 0; */
+// const TableStyled = styled(animated.div)`
+const TableStyled = styled(animated.table)`
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: -10px;
+
   font-size: 0.8em;
   text-align: left;
 `;
 
-// const THeadStyled = styled(animated.thead)`
-const THeadStyled = styled(animated.div)`
+// const THeadStyled = styled(animated.div)`
+const THeadStyled = styled(animated.thead)`
   background: rgba(0, 0, 0, 0.04);
-  overflow-y: auto;
-  overflow-x: hidden;
+  /* overflow-y: auto;
+  overflow-x: hidden; */
   border-radius: 4px;
 `;
 
-// const TBodyStyled = styled(animated.tbody)`
-const TBodyStyled = styled(animated.div)`
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 70vh;
+// const TBodyStyled = styled(animated.div)`
+const TBodyStyled = styled(animated.tbody)`
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
+  /* height: 70vh; */
 `;
 
-// const TrStyled = styled(animated.tr)`
-const TrStyled = styled(animated.div)`
+// const TrStyled = styled(animated.div)`
+const TrStyled = styled(animated.tr)`
   /* :nth-child(even) {
     background: rgba(0, 0, 0, 0.02);
   } */
@@ -44,17 +46,30 @@ const TrStyled = styled(animated.div)`
   overflow-wrap: break-word;
 `;
 
-// const ThStyled = styled(animated.th)`
-const ThStyled = styled(animated.div)`
+// const ThStyled = styled(animated.div)`
+const ThStyled = styled(animated.th)`
   padding: 1em 1em;
   /* position: relative; */
 `;
 
-// const TdStyled = styled(animated.td)`
-const TdStyled = styled(animated.div)`
-  padding: 0.8em 1em;
-  border-bottom: 1px solid #ddd;
-  /* position: relative; */
+// const TdStyled = styled(animated.div)`
+const TdStyled = styled(animated.td)`
+  vertical-align: top;
+
+  padding: 1em;
+  /* border-bottom: 1px solid #ddd; */
+  margin: 2px 0;
+  background: whitesmoke;
+
+  :first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  :last-child {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+  }
 `;
 
 const userAPI = new UserAPI();
@@ -141,8 +156,8 @@ const UsersList = () => {
   const defaultColumn = useMemo(
     () => ({
       // When using the useFlexLayout:
-      minWidth: 30, // minWidth is only used as a limit for resizing
-      width: 150, // width is used for both the flex-basis and flex-grow
+      minWidth: 10, // minWidth is only used as a limit for resizing
+      width: 20, // width is used for both the flex-basis and flex-grow
       maxWidth: 200, // maxWidth is only used as a limit for resizings
     }),
     []
@@ -154,7 +169,8 @@ const UsersList = () => {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data, defaultColumn }, useFlexLayout);
+    // } = useTable({ columns, data, defaultColumn }, useFlexLayout);
+  } = useTable({ columns, data });
 
   //   console.log(data);
 
