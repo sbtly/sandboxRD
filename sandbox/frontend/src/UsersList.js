@@ -13,8 +13,8 @@ const TableWrapperStyled = styled(animated.div)`
 // const TableStyled = styled(animated.div)`
 const TableStyled = styled(animated.table)`
   border-collapse: separate;
-  border-spacing: 0 10px;
-  margin-top: -10px;
+  border-spacing: 0 6px;
+  margin-top: -6px;
 
   font-size: 0.8em;
   text-align: left;
@@ -22,10 +22,18 @@ const TableStyled = styled(animated.table)`
 
 // const THeadStyled = styled(animated.div)`
 const THeadStyled = styled(animated.thead)`
-  background: rgba(0, 0, 0, 0.04);
+  /* background: rgba(0, 0, 0, 0.04); */
   /* overflow-y: auto;
   overflow-x: hidden; */
   border-radius: 4px;
+
+  tr {
+    box-shadow: none;
+
+    th {
+      border-bottom: 2px solid black;
+    }
+  }
 `;
 
 // const TBodyStyled = styled(animated.div)`
@@ -43,12 +51,15 @@ const TrStyled = styled(animated.tr)`
   :hover {
     background: rgba(0, 0, 0, 0.05);
   }
-  overflow-wrap: break-word;
+  /* box-shadow: 0 0.25em 0.375em rgba(50, 50, 93, 0.04),
+    0 0.063em 0.188em rgba(0, 0, 0, 0.02); */
 `;
 
 // const ThStyled = styled(animated.div)`
 const ThStyled = styled(animated.th)`
   padding: 1em 1em;
+  vertical-align: bottom;
+
   /* position: relative; */
 `;
 
@@ -56,10 +67,12 @@ const ThStyled = styled(animated.th)`
 const TdStyled = styled(animated.td)`
   vertical-align: top;
 
-  padding: 1em;
-  /* border-bottom: 1px solid #ddd; */
+  padding: 1em 1em 1.5em 1em;
+  border-bottom: 1px solid #eee;
   margin: 2px 0;
-  background: whitesmoke;
+  background: white;
+
+  overflow-wrap: break-word;
 
   :first-child {
     border-top-left-radius: 4px;
