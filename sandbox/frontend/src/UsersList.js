@@ -25,23 +25,21 @@ const TBodyStyled = styled(animated.tbody)`
 `;
 
 const ThStyled = styled(animated.th)`
-  /* border-collapse: collapse; */
   padding: 0.5em 1em;
 `;
 
 const TrStyled = styled(animated.tr)`
-  /* border-collapse: collapse; */
-  :nth-child(even) {
+  /* :nth-child(even) {
     background: rgba(0, 0, 0, 0.02);
-  }
+  } */
   :hover {
     background: rgba(0, 0, 0, 0.05);
   }
 `;
 
 const TdStyled = styled(animated.td)`
-  /* border-collapse: collapse; */
   padding: 0.8em 1em;
+  border-bottom: 1px solid #ddd;
 `;
 
 const userAPI = new UserAPI();
