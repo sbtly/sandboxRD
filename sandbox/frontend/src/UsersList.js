@@ -7,6 +7,7 @@ const userAPI = new UserAPI();
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [nextPageURL, setNextPageURL] = useState("");
+  const [prevPageURL, setPrevPageURL] = useState("");
 
   const nextPage = useCallback(() => {
     userAPI.getUsersByURL(nextPageURL).then((result) => {
@@ -14,6 +15,13 @@ const UsersList = () => {
       setNextPageURL(result.nextlink);
     });
   }, [nextPageURL]);
+
+  const prevPage = useCallback(() => {
+    userAPI.getUsersByURL(prevPageURL).then((result) => {
+      setUsers(result.data);
+      setNextPageURL(result.prevlink);
+    });
+  }, [prevPageURL]);
 
   const handleDelete = useCallback(
     (e, pk) => {
@@ -94,6 +102,7 @@ const UsersList = () => {
     userAPI.getUsers().then(function (result) {
       setUsers(result.data);
       setNextPageURL(result.nextlink);
+      setPrevPageURL(result.prevlink);
     });
   }, []);
 
@@ -131,6 +140,9 @@ const UsersList = () => {
         </tbody>
       </table>
 
+      <button className="btn" onClick={prevPage}>
+        Prev
+      </button>
       <button className="btn" onClick={nextPage}>
         Next
       </button>
