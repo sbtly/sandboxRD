@@ -6,7 +6,7 @@ import { animated } from "react-spring";
 
 // styled
 const TableWrapperStyled = styled(animated.div)`
-  overflow-x: auto;
+  /* overflow-x: auto; */
   display: block;
 `;
 
@@ -20,10 +20,10 @@ const TableStyled = styled(animated.div)`
 
 // const THeadStyled = styled(animated.thead)`
 const THeadStyled = styled(animated.div)`
-  /* border-collapse: collapse; */
   background: rgba(0, 0, 0, 0.04);
   overflow-y: auto;
   overflow-x: hidden;
+  border-radius: 4px;
 `;
 
 // const TBodyStyled = styled(animated.tbody)`
@@ -31,19 +31,6 @@ const TBodyStyled = styled(animated.div)`
   overflow-y: scroll;
   overflow-x: hidden;
   height: 70vh;
-`;
-
-// const ThStyled = styled(animated.th)`
-const ThStyled = styled(animated.div)`
-  padding: 0.5em 1em;
-  /* position: relative; */
-`;
-
-// const TdStyled = styled(animated.td)`
-const TdStyled = styled(animated.div)`
-  padding: 0.8em 1em;
-  border-bottom: 1px solid #ddd;
-  /* position: relative; */
 `;
 
 // const TrStyled = styled(animated.tr)`
@@ -54,6 +41,20 @@ const TrStyled = styled(animated.div)`
   :hover {
     background: rgba(0, 0, 0, 0.05);
   }
+  overflow-wrap: break-word;
+`;
+
+// const ThStyled = styled(animated.th)`
+const ThStyled = styled(animated.div)`
+  padding: 1em 1em;
+  /* position: relative; */
+`;
+
+// const TdStyled = styled(animated.td)`
+const TdStyled = styled(animated.div)`
+  padding: 0.8em 1em;
+  border-bottom: 1px solid #ddd;
+  /* position: relative; */
 `;
 
 const userAPI = new UserAPI();
