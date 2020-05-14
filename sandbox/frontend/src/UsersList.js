@@ -1,45 +1,59 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import UserAPI from "./UserAPI";
-import { useTable } from "react-table";
+import { useTable, useFlexLayout } from "react-table";
 import styled from "styled-components";
 import { animated } from "react-spring";
 
 // styled
 const TableWrapperStyled = styled(animated.div)`
   overflow-x: auto;
+  display: block;
 `;
 
-const TableStyled = styled(animated.table)`
-  border-collapse: collapse;
+// const TableStyled = styled(animated.table)`
+const TableStyled = styled(animated.div)`
+  /* border-collapse: collapse; */
+  /* border-spacing: 0; */
   font-size: 0.8em;
   text-align: left;
 `;
 
-const THeadStyled = styled(animated.thead)`
+// const THeadStyled = styled(animated.thead)`
+const THeadStyled = styled(animated.div)`
   /* border-collapse: collapse; */
   background: rgba(0, 0, 0, 0.04);
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
-const TBodyStyled = styled(animated.tbody)`
-  /* border-collapse: collapse; */
+// const TBodyStyled = styled(animated.tbody)`
+const TBodyStyled = styled(animated.div)`
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 70vh;
 `;
 
-const ThStyled = styled(animated.th)`
+// const ThStyled = styled(animated.th)`
+const ThStyled = styled(animated.div)`
   padding: 0.5em 1em;
+  /* position: relative; */
 `;
 
-const TrStyled = styled(animated.tr)`
+// const TdStyled = styled(animated.td)`
+const TdStyled = styled(animated.div)`
+  padding: 0.8em 1em;
+  border-bottom: 1px solid #ddd;
+  /* position: relative; */
+`;
+
+// const TrStyled = styled(animated.tr)`
+const TrStyled = styled(animated.div)`
   /* :nth-child(even) {
     background: rgba(0, 0, 0, 0.02);
   } */
   :hover {
     background: rgba(0, 0, 0, 0.05);
   }
-`;
-
-const TdStyled = styled(animated.td)`
-  padding: 0.8em 1em;
-  border-bottom: 1px solid #ddd;
 `;
 
 const userAPI = new UserAPI();
@@ -123,13 +137,23 @@ const UsersList = () => {
     []
   );
 
+  const defaultColumn = useMemo(
+    () => ({
+      // When using the useFlexLayout:
+      minWidth: 30, // minWidth is only used as a limit for resizing
+      width: 150, // width is used for both the flex-basis and flex-grow
+      maxWidth: 200, // maxWidth is only used as a limit for resizings
+    }),
+    []
+  );
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data });
+  } = useTable({ columns, data, defaultColumn }, useFlexLayout);
 
   //   console.log(data);
 
