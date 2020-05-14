@@ -3,7 +3,8 @@ import "typeface-notosans-kor";
 
 export const global = {
   colors: {
-    bg: "#fbfbfb",
+    // bg: "#fbfbfb",
+    bg: "#fff",
   },
   fonts: {
     kor: "Noto Sans KR",

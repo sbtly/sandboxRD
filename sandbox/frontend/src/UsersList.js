@@ -1,6 +1,89 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import UserAPI from "./UserAPI";
-import { useTable } from "react-table";
+import { useTable, useFlexLayout } from "react-table";
+import styled from "styled-components";
+import { animated } from "react-spring";
+
+// styled
+const TableWrapperStyled = styled(animated.div)`
+  /* overflow-x: auto; */
+  /* display: block; */
+`;
+
+// const TableStyled = styled(animated.div)`
+const TableStyled = styled(animated.table)`
+  border-collapse: separate;
+  border-spacing: 0 6px;
+  margin-top: -6px;
+
+  font-size: 0.8em;
+  text-align: left;
+`;
+
+// const THeadStyled = styled(animated.div)`
+const THeadStyled = styled(animated.thead)`
+  /* background: rgba(0, 0, 0, 0.04); */
+  /* overflow-y: auto;
+  overflow-x: hidden; */
+  border-radius: 4px;
+
+  tr {
+    box-shadow: none;
+
+    th {
+      border-bottom: 2px solid black;
+    }
+  }
+`;
+
+// const TBodyStyled = styled(animated.div)`
+const TBodyStyled = styled(animated.tbody)`
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
+  /* height: 70vh; */
+`;
+
+// const TrStyled = styled(animated.div)`
+const TrStyled = styled(animated.tr)`
+  /* :nth-child(even) {
+    background: rgba(0, 0, 0, 0.02);
+  } */
+  :hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  /* box-shadow: 0 0.25em 0.375em rgba(50, 50, 93, 0.04),
+    0 0.063em 0.188em rgba(0, 0, 0, 0.02); */
+`;
+
+// const ThStyled = styled(animated.div)`
+const ThStyled = styled(animated.th)`
+  padding: 1em 1em;
+  vertical-align: bottom;
+
+  /* position: relative; */
+`;
+
+// const TdStyled = styled(animated.div)`
+const TdStyled = styled(animated.td)`
+  vertical-align: top;
+
+  padding: 1em 1em 1.5em 1em;
+  border-bottom: 1px solid #eee;
+  margin: 2px 0;
+  background: white;
+
+  overflow-wrap: break-word;
+
+  :first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  :last-child {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+`;
 
 const userAPI = new UserAPI();
 
@@ -83,12 +166,23 @@ const UsersList = () => {
     []
   );
 
+  const defaultColumn = useMemo(
+    () => ({
+      // When using the useFlexLayout:
+      minWidth: 10, // minWidth is only used as a limit for resizing
+      width: 20, // width is used for both the flex-basis and flex-grow
+      maxWidth: 200, // maxWidth is only used as a limit for resizings
+    }),
+    []
+  );
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
+    // } = useTable({ columns, data, defaultColumn }, useFlexLayout);
   } = useTable({ columns, data });
 
   //   console.log(data);
@@ -102,25 +196,29 @@ const UsersList = () => {
   }, []);
 
   return (
-    <div className="usersList">
-      <table {...getTableProps()}>
-        <thead>
+    <TableWrapperStyled className="usersList">
+      <TableStyled {...getTableProps()}>
+        <THeadStyled>
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <TrStyled {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <ThStyled {...column.getHeaderProps()}>
+                  {column.render("Header")}
+                </ThStyled>
               ))}
-            </tr>
+            </TrStyled>
           ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
+        </THeadStyled>
+        <TBodyStyled {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <TrStyled {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <TdStyled {...cell.getCellProps()}>
+                      {cell.render("Cell")}
+                    </TdStyled>
                   );
                 })}
                 {/* <td>
@@ -129,11 +227,11 @@ const UsersList = () => {
                   </button>
                   <a href={"/user/" + data[i].pk}>Update</a>
                 </td> */}
-              </tr>
+              </TrStyled>
             );
           })}
-        </tbody>
-      </table>
+        </TBodyStyled>
+      </TableStyled>
 
       <button className="btn" onClick={prevPage}>
         Prev
@@ -141,7 +239,7 @@ const UsersList = () => {
       <button className="btn" onClick={nextPage}>
         Next
       </button>
-    </div>
+    </TableWrapperStyled>
   );
 };
 
