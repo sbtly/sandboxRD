@@ -6,6 +6,7 @@ import { useSpring, animated } from "react-spring";
 import { useHover } from "react-use-gesture";
 import { Activity, Users, ShoppingBag, Tag, Eye } from "react-feather";
 import { SidebarHoverContext } from "../App";
+import { global } from "../styles";
 
 const SidebarWrapper = styled(animated.div)`
   position: fixed;
@@ -18,8 +19,9 @@ const SidebarDivStyle = styled(animated.div)`
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: transparent;
   pointer-events: auto;
+  padding: 25px 10px;
 `;
 
 const SidebarListStyled = styled(animated.div)`
@@ -50,7 +52,7 @@ const SidebarIconStyled = styled(animated.div)`
 
 const SidebarTextStyled = styled(animated.div)`
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 700;
 
   transform: translateX(0px);
 `;
@@ -61,7 +63,7 @@ const SidebarCurrentStyled = styled(animated.div)`
   height: 40px;
   margin: 20px 0 20px 0;
   /* height: 50%; */
-  background: black;
+  background: ${global.colors.primary};
   transform: translateY(0px);
 `;
 
@@ -88,6 +90,10 @@ const SidebarList = (props) => {
 
   const hoverAnimate = useSpring({
     opacity: currentPath === props.href || listHovered ? 1 : 0.3,
+    color:
+      currentPath === props.href || listHovered
+        ? global.colors.primary
+        : global.colors.text,
   });
 
   // const currentStyle =
@@ -118,7 +124,7 @@ const SidebarDiv = (props) => {
     setSidebarHovered(hovering);
   });
   const divAnimate = useSpring({
-    background: sidebarHovered ? "#fff" : "rgba(255,255,255,0)",
+    // background: sidebarHovered ? "#fff" : "rgba(255,255,255,0)",
   });
 
   const currentAnimate = useSpring({
@@ -127,7 +133,7 @@ const SidebarDiv = (props) => {
 
   return (
     <SidebarDivStyle {...gesture()} style={divAnimate}>
-      <SidebarCurrentStyled style={currentAnimate} />
+      {/* <SidebarCurrentStyled style={currentAnimate} /> */}
       {props.children}
     </SidebarDivStyle>
   );

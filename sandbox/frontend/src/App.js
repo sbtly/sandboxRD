@@ -45,8 +45,8 @@ const BaseLayout = (props) => {
       >
         <Sidebar />
         <Content>
-          <Link to="/">Users</Link>
-          <Link to="/user">CREATE USER</Link>
+          {/* <Link to="/">Users</Link>
+          <Link to="/user">CREATE USER</Link> */}
           <Route path="/" exact component={UsersList} />
           <Route path="/user/:pk" component={UserCreateUpdate} />
           <Route path="/user/" exact component={UserCreateUpdate} />

@@ -3,6 +3,7 @@ import UserAPI from "./UserAPI";
 import { useTable, useFlexLayout } from "react-table";
 import styled from "styled-components";
 import { animated } from "react-spring";
+import { global } from "./styles";
 
 // styled
 const TableWrapperStyled = styled(animated.div)`
@@ -12,12 +13,15 @@ const TableWrapperStyled = styled(animated.div)`
 
 // const TableStyled = styled(animated.div)`
 const TableStyled = styled(animated.table)`
-  border-collapse: separate;
-  border-spacing: 0 6px;
-  margin-top: -6px;
+  /* border-collapse: separate; */
+  border-collapse: collapse;
+
+  /* border-spacing: 0 6px;
+  margin-top: -6px; */
 
   font-size: 0.8em;
   text-align: left;
+  font-weight: 700;
 `;
 
 // const THeadStyled = styled(animated.div)`
@@ -26,13 +30,10 @@ const THeadStyled = styled(animated.thead)`
   /* overflow-y: auto;
   overflow-x: hidden; */
   border-radius: 4px;
+  color: ${global.colors.primary};
 
   tr {
     box-shadow: none;
-
-    th {
-      border-bottom: 2px solid black;
-    }
   }
 `;
 
@@ -49,7 +50,14 @@ const TrStyled = styled(animated.tr)`
     background: rgba(0, 0, 0, 0.02);
   } */
   :hover {
-    background: rgba(0, 0, 0, 0.05);
+    /* background: rgba(0, 0, 0, 0.02); */
+    /* background: rgba(255, 255, 255, 0.5); */
+    background: "#E9D3D0";
+    color: ${global.colors.primary};
+
+    td {
+      border-bottom: 1px solid ${global.colors.primary};
+    }
   }
   /* box-shadow: 0 0.25em 0.375em rgba(50, 50, 93, 0.04),
     0 0.063em 0.188em rgba(0, 0, 0, 0.02); */
@@ -57,8 +65,16 @@ const TrStyled = styled(animated.tr)`
 
 // const ThStyled = styled(animated.div)`
 const ThStyled = styled(animated.th)`
-  padding: 1em 1em;
+  padding: 1.2em 2em 1.2em 0em;
+
   vertical-align: bottom;
+  /* border-top: 2px solid ${global.colors.primary}; */
+  border-bottom: 4px solid ${global.colors.primary};
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+
+  /* :first-child {
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+  } */
 
   /* position: relative; */
 `;
@@ -67,14 +83,23 @@ const ThStyled = styled(animated.th)`
 const TdStyled = styled(animated.td)`
   vertical-align: top;
 
-  padding: 1em 1em 1.5em 1em;
-  border-bottom: 1px solid #eee;
-  margin: 2px 0;
-  background: white;
+  /* padding: 1em 1em 1.5em 1em; */
+  padding: 1.2em 2em 1.2em 0em;
+  border-bottom: 1px solid ${global.colors.primary};
+  border-right: 0.5px solid rgba(0, 0, 0, 0.05);
+  /* margin: 2px 0; */
+  /* background: white; */
 
   overflow-wrap: break-word;
 
-  :first-child {
+  :last-child {
+    /* border-left: 1px solid rgba(0, 0, 0, 0.05); */
+
+    /* border-bottom: none; */
+    border-right: none;
+  }
+
+  /* :first-child {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
   }
@@ -82,7 +107,7 @@ const TdStyled = styled(animated.td)`
   :last-child {
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
-  }
+  } */
 `;
 
 const userAPI = new UserAPI();

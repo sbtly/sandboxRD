@@ -20,7 +20,7 @@ export const Content = (props) => {
   const { sidebarHovered } = useContext(SidebarHoverContext);
   const animate = useSpring({
     transform: sidebarHovered ? "translateX(100px)" : "translateX(0px)",
-    background: sidebarHovered ? global.colors.bg : "rgba(255,255,255,0)",
+    // background: sidebarHovered ? global.colors.bg : "rgba(255,255,255,0)",
   });
 
   return <ContentStyled style={animate}>{props.children}</ContentStyled>;
