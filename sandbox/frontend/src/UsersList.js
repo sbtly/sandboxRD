@@ -21,7 +21,7 @@ const TableStyled = styled(animated.table)`
 
   font-size: 0.8em;
   text-align: left;
-  font-weight: 500;
+  font-weight: 700;
 `;
 
 // const THeadStyled = styled(animated.div)`
@@ -34,11 +34,6 @@ const THeadStyled = styled(animated.thead)`
 
   tr {
     box-shadow: none;
-
-    th {
-      border-bottom: 1px solid ${global.colors.primary};
-      /* border-right: 1px solid #5d5d5d; */
-    }
   }
 `;
 
@@ -55,7 +50,9 @@ const TrStyled = styled(animated.tr)`
     background: rgba(0, 0, 0, 0.02);
   } */
   :hover {
-    background: rgba(0, 0, 0, 0.02);
+    /* background: rgba(0, 0, 0, 0.02); */
+    /* background: rgba(255, 255, 255, 0.5); */
+    background: "#E9D3D0";
     color: ${global.colors.primary};
 
     td {
@@ -68,8 +65,16 @@ const TrStyled = styled(animated.tr)`
 
 // const ThStyled = styled(animated.div)`
 const ThStyled = styled(animated.th)`
-  padding: 1em 1em;
+  padding: 1.2em 2em 1.2em 0em;
+
   vertical-align: bottom;
+  /* border-top: 2px solid ${global.colors.primary}; */
+  border-bottom: 4px solid ${global.colors.primary};
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+
+  /* :first-child {
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+  } */
 
   /* position: relative; */
 `;
@@ -78,13 +83,21 @@ const ThStyled = styled(animated.th)`
 const TdStyled = styled(animated.td)`
   vertical-align: top;
 
-  padding: 1em 1em 1.5em 1em;
-  border-bottom: 1px solid #ccc;
-  /* border-right: 1px solid #5d5d5d; */
+  /* padding: 1em 1em 1.5em 1em; */
+  padding: 1.2em 2em 1.2em 0em;
+  border-bottom: 1px solid ${global.colors.primary};
+  border-right: 0.5px solid rgba(0, 0, 0, 0.05);
   /* margin: 2px 0; */
   /* background: white; */
 
   overflow-wrap: break-word;
+
+  :last-child {
+    /* border-left: 1px solid rgba(0, 0, 0, 0.05); */
+
+    /* border-bottom: none; */
+    border-right: none;
+  }
 
   /* :first-child {
     border-top-left-radius: 4px;
