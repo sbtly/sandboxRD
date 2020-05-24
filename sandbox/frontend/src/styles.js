@@ -5,7 +5,13 @@ import styled, { createGlobalStyle } from "styled-components";
 export const global = {
   colors: {
     // bg: "#fbfbfb",
-    bg: "#fff",
+    // bg: "#fff",
+    // bg: "#f5f5f5",
+    //  bg: "#E9D3D0",
+    bg: "#DBDAE0",
+    text: "#3a3a3a",
+    // primary: "#583b77",
+    primary: "#f0335e",
   },
   fonts: {
     // kor: "Noto Sans KR",
@@ -28,6 +34,7 @@ export const GlobalStyle = createGlobalStyle`
     /* overflow: hidden; */
     overflow-x: hidden;
     user-select: none;
+    color: ${global.colors.text};
     font-family: ${global.fonts.kor}, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
       segoe ui, arial, sans-serif;
     background: ${global.colors.bg};

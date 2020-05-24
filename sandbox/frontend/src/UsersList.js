@@ -3,6 +3,7 @@ import UserAPI from "./UserAPI";
 import { useTable, useFlexLayout } from "react-table";
 import styled from "styled-components";
 import { animated } from "react-spring";
+import { global } from "./styles";
 
 // styled
 const TableWrapperStyled = styled(animated.div)`
@@ -12,12 +13,15 @@ const TableWrapperStyled = styled(animated.div)`
 
 // const TableStyled = styled(animated.div)`
 const TableStyled = styled(animated.table)`
-  border-collapse: separate;
-  border-spacing: 0 6px;
-  margin-top: -6px;
+  /* border-collapse: separate; */
+  border-collapse: collapse;
+
+  /* border-spacing: 0 6px;
+  margin-top: -6px; */
 
   font-size: 0.8em;
   text-align: left;
+  font-weight: 500;
 `;
 
 // const THeadStyled = styled(animated.div)`
@@ -26,12 +30,14 @@ const THeadStyled = styled(animated.thead)`
   /* overflow-y: auto;
   overflow-x: hidden; */
   border-radius: 4px;
+  color: ${global.colors.primary};
 
   tr {
     box-shadow: none;
 
     th {
-      border-bottom: 2px solid black;
+      border-bottom: 1px solid ${global.colors.primary};
+      /* border-right: 1px solid #5d5d5d; */
     }
   }
 `;
@@ -49,7 +55,12 @@ const TrStyled = styled(animated.tr)`
     background: rgba(0, 0, 0, 0.02);
   } */
   :hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.02);
+    color: ${global.colors.primary};
+
+    td {
+      border-bottom: 1px solid ${global.colors.primary};
+    }
   }
   /* box-shadow: 0 0.25em 0.375em rgba(50, 50, 93, 0.04),
     0 0.063em 0.188em rgba(0, 0, 0, 0.02); */
@@ -68,13 +79,14 @@ const TdStyled = styled(animated.td)`
   vertical-align: top;
 
   padding: 1em 1em 1.5em 1em;
-  border-bottom: 1px solid #eee;
-  margin: 2px 0;
-  background: white;
+  border-bottom: 1px solid #ccc;
+  /* border-right: 1px solid #5d5d5d; */
+  /* margin: 2px 0; */
+  /* background: white; */
 
   overflow-wrap: break-word;
 
-  :first-child {
+  /* :first-child {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
   }
@@ -82,7 +94,7 @@ const TdStyled = styled(animated.td)`
   :last-child {
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
-  }
+  } */
 `;
 
 const userAPI = new UserAPI();
