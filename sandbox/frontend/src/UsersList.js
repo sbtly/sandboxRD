@@ -160,31 +160,31 @@ const UsersList = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "no.",
+        Header: ".",
         accessor: "pk",
       },
       {
-        Header: "First Name",
+        Header: "이름",
         accessor: "first_name",
       },
       {
-        Header: "Last Name",
+        Header: "성",
         accessor: "last_name",
       },
       {
-        Header: "email",
+        Header: "메일",
         accessor: "email",
       },
       {
-        Header: "phone",
+        Header: "번호",
         accessor: "phone",
       },
       {
-        Header: "address",
+        Header: "주소",
         accessor: "address",
       },
       {
-        Header: "description",
+        Header: "설명",
         accessor: "description",
       },
     ],
