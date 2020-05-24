@@ -89,34 +89,34 @@ const userAPI = new UserAPI();
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
-  const [nextPageURL, setNextPageURL] = useState("");
-  const [prevPageURL, setPrevPageURL] = useState("");
+  // const [nextPageURL, setNextPageURL] = useState("");
+  // const [prevPageURL, setPrevPageURL] = useState("");
 
-  const nextPage = useCallback(() => {
-    userAPI.getUsersByURL(nextPageURL).then((result) => {
-      setUsers(result.data);
-      setNextPageURL(result.nextlink);
-    });
-  }, [nextPageURL]);
+  // const nextPage = useCallback(() => {
+  //   userAPI.getUsersByURL(nextPageURL).then((result) => {
+  //     setUsers(result.data);
+  //     setNextPageURL(result.nextlink);
+  //   });
+  // }, [nextPageURL]);
 
-  const prevPage = useCallback(() => {
-    userAPI.getUsersByURL(prevPageURL).then((result) => {
-      setUsers(result.data);
-      setNextPageURL(result.prevlink);
-    });
-  }, [prevPageURL]);
+  // const prevPage = useCallback(() => {
+  //   userAPI.getUsersByURL(prevPageURL).then((result) => {
+  //     setUsers(result.data);
+  //     setNextPageURL(result.prevlink);
+  //   });
+  // }, [prevPageURL]);
 
-  const handleDelete = useCallback(
-    (e, pk) => {
-      userAPI.deleteUser({ pk: pk }).then(() => {
-        var newArr = users.filter(function (obj) {
-          return obj.pk !== pk;
-        });
-        setUsers(newArr);
-      });
-    },
-    [users]
-  );
+  // const handleDelete = useCallback(
+  //   (e, pk) => {
+  //     userAPI.deleteUser({ pk: pk }).then(() => {
+  //       var newArr = users.filter(function (obj) {
+  //         return obj.pk !== pk;
+  //       });
+  //       setUsers(newArr);
+  //     });
+  //   },
+  //   [users]
+  // );
 
   const data = useMemo(
     () =>
@@ -190,8 +190,8 @@ const UsersList = () => {
   useEffect(() => {
     userAPI.getUsers().then(function (result) {
       setUsers(result.data);
-      setNextPageURL(result.nextlink);
-      setPrevPageURL(result.prevlink);
+      // setNextPageURL(result.nextlink);
+      // setPrevPageURL(result.prevlink);
     });
   }, []);
 
@@ -233,12 +233,12 @@ const UsersList = () => {
         </TBodyStyled>
       </TableStyled>
 
-      <button className="btn" onClick={prevPage}>
+      {/* <button className="btn" onClick={prevPage}>
         Prev
       </button>
       <button className="btn" onClick={nextPage}>
         Next
-      </button>
+      </button> */}
     </TableWrapperStyled>
   );
 };

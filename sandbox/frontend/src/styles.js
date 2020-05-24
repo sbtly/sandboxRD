@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
-import "typeface-notosans-kor";
+// import "typeface-notosans-kor";
+// import "spoqa-han-sans";
 
 export const global = {
   colors: {
@@ -7,7 +8,8 @@ export const global = {
     bg: "#fff",
   },
   fonts: {
-    kor: "Noto Sans KR",
+    // kor: "Noto Sans KR",
+    kor: "Spoqa Han Sans",
   },
 };
 
