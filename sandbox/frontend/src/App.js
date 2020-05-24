@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 import UsersList from "./UsersList";
 import UserCreateUpdate from "./UserCreateUpdate";
 import "./normalize.css";
+import "./fontFace.css";
 import { GlobalStyle } from "./styles";
 import { Sidebar } from "./components/Sidebar";
 import { Content } from "./components/Content";
