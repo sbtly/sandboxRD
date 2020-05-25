@@ -6,6 +6,8 @@ import "react-virtualized/styles.css";
 const userAPI = new UserAPI();
 const UsersList = () => {
   const [users, setUsers] = useState([]);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
   const data = useMemo(
     () =>
       users.map((u) => ({
@@ -26,35 +28,6 @@ const UsersList = () => {
     });
   }, []);
 
-  //       {
-  //     Header: ".",
-  //     accessor: "pk",
-  //   },
-  //   {
-  //     Header: "이름",
-  //     accessor: "first_name",
-  //   },
-  //   {
-  //     Header: "성",
-  //     accessor: "last_name",
-  //   },
-  //   {
-  //     Header: "메일",
-  //     accessor: "email",
-  //   },
-  //   {
-  //     Header: "번호",
-  //     accessor: "phone",
-  //   },
-  //   {
-  //     Header: "주소",
-  //     accessor: "address",
-  //   },
-  //   {
-  //     Header: "설명",
-  //     accessor: "description",
-  //   },
-
   return (
     <WindowScroller>
       {({ height, scrollTop }) => (
@@ -71,16 +44,42 @@ const UsersList = () => {
               rowCount={data.length}
               overscanRowCount={5}
             >
-              <Column label="no." dataKey="pk" width={100}></Column>
-              <Column label="fn" dataKey="first_name" width={100}></Column>
-              <Column label="ln" dataKey="last_name" width={100}></Column>
-              <Column label="email" dataKey="email" width={100}></Column>
-              <Column label="phone" dataKey="phone" width={100}></Column>
-              <Column label="address" dataKey="address" width={100}></Column>
+              <Column label="no." dataKey="pk" width={10} flexGrow={1}></Column>
+              <Column
+                label="fn"
+                dataKey="first_name"
+                width={10}
+                flexGrow={2}
+              ></Column>
+              <Column
+                label="ln"
+                dataKey="last_name"
+                width={10}
+                flexGrow={2}
+              ></Column>
+              <Column
+                label="email"
+                dataKey="email"
+                width={10}
+                flexGrow={2}
+              ></Column>
+              <Column
+                label="phone"
+                dataKey="phone"
+                width={10}
+                flexGrow={2}
+              ></Column>
+              <Column
+                label="address"
+                dataKey="address"
+                width={10}
+                flexGrow={3}
+              ></Column>
               <Column
                 label="description"
                 dataKey="description"
-                width={100}
+                width={10}
+                flexGrow={5}
               ></Column>
             </Table>
           )}
