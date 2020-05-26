@@ -170,8 +170,8 @@ const TdStyled = styled(animated.td)`
 const userAPI = new UserAPI();
 
 function Table({ columns, data }) {
-  const overscan = 0;
-  const defaultItemHeight = 60;
+  const overscan = 5;
+  const defaultItemHeight = 30;
   const totalCount = data.length;
   const [totalListHeight, setTotalListHeight] = useState(
     totalCount * defaultItemHeight
@@ -250,7 +250,7 @@ function Table({ columns, data }) {
           style={{
             height: totalListHeight,
             minHeight: Math.max(totalListHeight, defaultItemHeight),
-            // maxHeight: "100vh"
+            // maxHeight: "100vh",
           }}
           rangeChanged={(a) => console.log("Range changed ", a)}
           totalListHeightChanged={(a) => {
