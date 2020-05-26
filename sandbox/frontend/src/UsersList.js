@@ -1,11 +1,68 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import UserAPI from "./UserAPI";
 import { useTable, useFlexLayout } from "react-table";
+import { Virtuoso } from "react-virtuoso";
 import styled from "styled-components";
 import { animated } from "react-spring";
 import { global } from "./styles";
 
 // styled
+
+const Styles = styled.div`
+  padding: 1rem;
+  ${"" /* These styles are suggested for the table fill all available space in its containing element */}
+  display: block;
+  ${"" /* These styles are required for a horizontaly scrollable table overflow */}
+  overflow: auto;
+
+  .table {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    .thead {
+      ${"" /* These styles are required for a scrollable body to align with the header properly */}
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .tbody {
+      overflow-y: hidden;
+      overflow-x: hidden;
+    }
+
+    .tr {
+      :last-child {
+        .td {
+          border-bottom: 0;
+        }
+      }
+      border-bottom: 1px solid black;
+    }
+
+    .th,
+    .td {
+      margin: 0;
+      padding: 0.5rem;
+      border-right: 1px solid black;
+      word-break: break-word;
+
+      ${"" /* In this example we use an absolutely position resizer,
+       so this is required. */}
+      position: relative;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
+`;
+
 const TableWrapperStyled = styled(animated.div)`
   /* overflow-x: auto; */
   /* display: block; */
@@ -112,6 +169,169 @@ const TdStyled = styled(animated.td)`
 
 const userAPI = new UserAPI();
 
+function Table({ columns, data }) {
+  const overscan = 0;
+  const defaultItemHeight = 60;
+  const totalCount = data.length;
+  const [totalListHeight, setTotalListHeight] = useState(
+    totalCount * defaultItemHeight
+  );
+
+  const defaultColumn = React.useMemo(
+    () => ({
+      // When using the useFlexLayout:
+      minWidth: 10, // minWidth is only used as a limit for resizing
+      width: 20, // width is used for both the flex-basis and flex-grow
+      maxWidth: 200, // maxWidth is only used as a limit for resizing
+    }),
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    totalColumnsWidth,
+    prepareRow,
+  } = useTable(
+    {
+      columns,
+      data,
+      defaultColumn,
+    },
+    useFlexLayout
+  );
+
+  const RenderRow = React.useCallback(
+    (index) => {
+      const row = rows[index];
+      prepareRow(row);
+      return (
+        <div
+          {...row.getRowProps({
+            // style,
+          })}
+          className="tr"
+        >
+          {row.cells.map((cell) => {
+            return (
+              <div {...cell.getCellProps()} className="td">
+                {cell.render("Cell")}
+              </div>
+            );
+          })}
+        </div>
+      );
+    },
+    [prepareRow, rows]
+  );
+
+  return (
+    <div {...getTableProps()} className="table">
+      <div className="thead">
+        {headerGroups.map((headerGroup) => (
+          <div {...headerGroup.getHeaderGroupProps()} className="tr">
+            {headerGroup.headers.map((column) => (
+              <div {...column.getHeaderProps()} className="th">
+                {column.render("Header")}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <div {...getTableBodyProps()} className="tbody">
+        <Virtuoso
+          ScrollContainer={MyScrollContainer}
+          totalCount={totalCount}
+          overscan={overscan}
+          item={RenderRow}
+          style={{
+            height: totalListHeight,
+            minHeight: Math.max(totalListHeight, defaultItemHeight),
+            // maxHeight: "100vh"
+          }}
+          rangeChanged={(a) => console.log("Range changed ", a)}
+          totalListHeightChanged={(a) => {
+            console.log("Total list height changed ", a);
+            setTotalListHeight(a);
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+const MyScrollContainer = ({
+  className,
+  style,
+  reportScrollTop,
+  scrollTo,
+  children,
+}) => {
+  const elRef = useRef(null);
+  const lastOffsetTopRef = useRef(0);
+
+  const reportScroll = useCallback(() => {
+    reportScrollTop(Math.max(0, window.scrollY - elRef.current.offsetTop));
+  }, [reportScrollTop]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", reportScroll);
+    return () => window.removeEventListener("scroll", reportScroll);
+  }, [reportScroll]);
+
+  useEffect(() => {
+    lastOffsetTopRef.current = elRef.current.offsetTop;
+    const offsetCheckInterval = setInterval(() => {
+      const offsetTop = elRef.current.offsetTop;
+      if (offsetTop !== lastOffsetTopRef.current) {
+        lastOffsetTopRef.current = offsetTop;
+        reportScroll();
+      }
+    }, 500);
+
+    return () => clearInterval(offsetCheckInterval);
+  }, [elRef.current]);
+
+  useEffect(() => {
+    scrollTo(({ top }) => {
+      window.scrollTo(0, top + lastOffsetTopRef.current);
+      console.log("Scroll to", top + lastOffsetTopRef.current);
+    });
+  }, []);
+
+  return (
+    <div
+      ref={elRef}
+      style={{
+        ...style,
+        width: "100%",
+        overflow: "visible",
+        // border: "5px dashed gray",
+        // borderRadius: "4px",
+      }}
+      tabIndex={0}
+      className={className}
+    >
+      {React.Children.map(children, (child, index) => {
+        if (index === 0) {
+          return React.cloneElement(child, {
+            // className: `${child.className || ""} theDiv`,
+            style: {
+              ...child.props.style,
+              maxHeight: "100vh",
+            },
+          });
+        }
+
+        return child;
+      })}
+    </div>
+  );
+};
+
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   // const [nextPageURL, setNextPageURL] = useState("");
@@ -191,27 +411,6 @@ const UsersList = () => {
     []
   );
 
-  const defaultColumn = useMemo(
-    () => ({
-      // When using the useFlexLayout:
-      minWidth: 10, // minWidth is only used as a limit for resizing
-      width: 20, // width is used for both the flex-basis and flex-grow
-      maxWidth: 200, // maxWidth is only used as a limit for resizings
-    }),
-    []
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    // } = useTable({ columns, data, defaultColumn }, useFlexLayout);
-  } = useTable({ columns, data });
-
-  //   console.log(data);
-
   useEffect(() => {
     userAPI.getUsers().then(function (result) {
       setUsers(result.data);
@@ -221,50 +420,9 @@ const UsersList = () => {
   }, []);
 
   return (
-    <TableWrapperStyled className="usersList">
-      <TableStyled {...getTableProps()}>
-        <THeadStyled>
-          {headerGroups.map((headerGroup) => (
-            <TrStyled {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <ThStyled {...column.getHeaderProps()}>
-                  {column.render("Header")}
-                </ThStyled>
-              ))}
-            </TrStyled>
-          ))}
-        </THeadStyled>
-        <TBodyStyled {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <TrStyled {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <TdStyled {...cell.getCellProps()}>
-                      {cell.render("Cell")}
-                    </TdStyled>
-                  );
-                })}
-                {/* <td>
-                  <button onClick={(e) => handleDelete(e, data[i].pk)}>
-                    Delete
-                  </button>
-                  <a href={"/user/" + data[i].pk}>Update</a>
-                </td> */}
-              </TrStyled>
-            );
-          })}
-        </TBodyStyled>
-      </TableStyled>
-
-      {/* <button className="btn" onClick={prevPage}>
-        Prev
-      </button>
-      <button className="btn" onClick={nextPage}>
-        Next
-      </button> */}
-    </TableWrapperStyled>
+    <Styles>
+      <Table columns={columns} data={data} />
+    </Styles>
   );
 };
 
