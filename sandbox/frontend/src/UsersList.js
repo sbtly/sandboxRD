@@ -171,7 +171,7 @@ const userAPI = new UserAPI();
 
 function Table({ columns, data }) {
   const overscan = 5;
-  const defaultItemHeight = 30;
+  const defaultItemHeight = 80; // needs to be close to real height, so that it can be rendered faster
   const totalCount = data.length;
   const [totalListHeight, setTotalListHeight] = useState(
     totalCount * defaultItemHeight
@@ -247,14 +247,15 @@ function Table({ columns, data }) {
           totalCount={totalCount}
           overscan={overscan}
           item={RenderRow}
+          // defaultItemHeight={defaultItemHeight}
           style={{
             height: totalListHeight,
             minHeight: Math.max(totalListHeight, defaultItemHeight),
             // maxHeight: "100vh",
           }}
-          rangeChanged={(a) => console.log("Range changed ", a)}
+          // rangeChanged={(a) => console.log("Range changed ", a)}
           totalListHeightChanged={(a) => {
-            console.log("Total list height changed ", a);
+            // console.log("Total list height changed ", a);
             setTotalListHeight(a);
           }}
         />
