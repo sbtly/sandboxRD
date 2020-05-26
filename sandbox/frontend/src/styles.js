@@ -11,7 +11,7 @@ export const global = {
     // bg: "#DBDAE0",
     // bg: "#ececec",
     // bg: "#ececef",
-    bg: "#f2f2f2",
+    bg: "#f7f7f7",
     text: "#3a3a3a",
     // primary: "#583b77",
     // primary: "#f0335e",
