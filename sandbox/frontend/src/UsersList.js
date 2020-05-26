@@ -23,7 +23,8 @@ const Styles = styled.div`
 
   .table {
     border-spacing: 0;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    font-size: 0.8em;
 
     .thead {
       ${"" /* These styles are required for a scrollable body to align with the header properly */}
@@ -181,7 +182,7 @@ function Table({ columns, data }) {
     () => ({
       // When using the useFlexLayout:
       minWidth: 10, // minWidth is only used as a limit for resizing
-      width: 20, // width is used for both the flex-basis and flex-grow
+      width: 10, // width is used for both the flex-basis and flex-grow
       maxWidth: 200, // maxWidth is only used as a limit for resizing
     }),
     []
@@ -383,30 +384,37 @@ const UsersList = () => {
       {
         Header: ".",
         accessor: "pk",
+        width: 10,
       },
       {
         Header: "이름",
         accessor: "first_name",
+        width: 20,
       },
       {
         Header: "성",
         accessor: "last_name",
+        width: 20,
       },
       {
         Header: "메일",
         accessor: "email",
+        width: 40,
       },
       {
         Header: "번호",
         accessor: "phone",
+        width: 40,
       },
       {
         Header: "주소",
         accessor: "address",
+        width: 50,
       },
       {
         Header: "설명",
         accessor: "description",
+        width: 80,
       },
     ],
     []
